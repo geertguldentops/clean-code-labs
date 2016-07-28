@@ -1,0 +1,16 @@
+/.classpath
+/.idea
+/.project
+/.sonar-ide.properties
+/bin
+*.iml
+*.log
+.DS_Store
+target/
+**/target/
+*/target/*
+*/target/**
+*/overlays/**
+**/overlays/
+*.epoch
+*.css
