@@ -1,15 +1,10 @@
 package be.jidoka.clean.code.labs.movie;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
 public class TicketTest {
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void shouldReturnGeneralAdmissionPrice_onCalculatePrice_withNormalAgeAndNonStudent() {
@@ -36,14 +31,6 @@ public class TicketTest {
     @Test
     public void shouldReturnChildrenPrice_onCalculatePrice_withAgeIsChildAndNotStudent() {
         assertThat(new Ticket(12, false).calculatePrice()).isEqualTo(5.5);
-    }
-
-    // Note that the "requirements" document does not cover what to do in this situation!
-    @Test
-    public void shouldThrowIllegalArgumentException_onCreateTicketWithChildAgeAndIsStudent() {
-        thrown.expect(IllegalArgumentException.class);
-
-        new Ticket(12, true);
     }
 
 }

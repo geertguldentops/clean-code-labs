@@ -8,38 +8,24 @@ public class Ticket {
     private static final double SENIOR_CITIZEN_PRICE = 6.0;
     private static final double CHILDREN_PRICE = 5.5;
 
-    private final int age;
-    private final boolean student;
+    private final Customer customer;
 
     public Ticket(int age, boolean student) {
-        if (isChild(age) && student) {
-            throw new IllegalArgumentException("A ticket can not be for a student and for a child at the same time!");
-        }
-
-        this.age = age;
-        this.student = student;
-    }
-
-    private static boolean isChild(int age) {
-        return age < 13;
+        this.customer = new Customer(age, student);
     }
 
     public double calculatePrice() {
-        if (isSeniorCitizen(age)) {
+        if (customer.isSeniorCitizen()) {
             return SENIOR_CITIZEN_PRICE;
-        } else if (isChild(age)) {
+        } else if (customer.isChild()) {
             return CHILDREN_PRICE;
-        }
-
-        if (student) {
-            return STUDENT_PRICE;
         } else {
-            return GENERAL_ADMISSION_PRICE;
+            if (customer.isStudent()) {
+                return STUDENT_PRICE;
+            } else {
+                return GENERAL_ADMISSION_PRICE;
+            }
         }
-    }
-
-    private static boolean isSeniorCitizen(int age) {
-        return age >= 65;
     }
 
 }
