@@ -35,25 +35,33 @@ public class InMemoryBill implements Bill {
     @Override
     public double finishPurchase() {
         if (isGroup()) {
-            final double sumOfAllGroupExtras = extras.stream()
-                    .filter(Extra::appliesToGroups)
-                    .mapToDouble(Extra::getPrice)
-                    .sum();
-
-            return tickets.size() * (GROUP_PRICE + sumOfAllGroupExtras);
+            return calculateGroupPrice();
         } else {
-            final double sumOfAllExtras = extras.stream()
-                    .mapToDouble(Extra::getPrice)
-                    .sum();
-
-            return tickets.stream()
-                    .mapToDouble(ticket -> ticket.calculatePrice() + sumOfAllExtras)
-                    .sum();
+            return calculateNonGroupPrice();
         }
     }
 
     private boolean isGroup() {
         return tickets.size() >= 20;
+    }
+
+    private double calculateGroupPrice() {
+        final double sumOfAllGroupExtras = extras.stream()
+                .filter(Extra::appliesToGroups)
+                .mapToDouble(Extra::getPrice)
+                .sum();
+
+        return tickets.size() * (GROUP_PRICE + sumOfAllGroupExtras);
+    }
+
+    private double calculateNonGroupPrice() {
+        final double sumOfAllExtras = extras.stream()
+                .mapToDouble(Extra::getPrice)
+                .sum();
+
+        return tickets.stream()
+                .mapToDouble(ticket -> ticket.calculatePrice() + sumOfAllExtras)
+                .sum();
     }
 
 }
