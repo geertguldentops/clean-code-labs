@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 public class Game {
 
     private static final int LAST_BOARD_POSITION = 11;
+    private static final int MAX_PLAYERS = 6;
 
     private final List<String> popQuestions = new LinkedList<>();
     private final List<String> scienceQuestions = new LinkedList<>();
@@ -15,9 +16,9 @@ public class Game {
     private final List<String> rockQuestions = new LinkedList<>();
 
     private final List<String> players = new ArrayList<>();
-    private final int[] places = new int[6];
-    private final int[] purses = new int[6];
-    private final boolean[] inPenaltyBox = new boolean[6];
+    private final int[] places = new int[MAX_PLAYERS];
+    private final int[] purses = new int[MAX_PLAYERS];
+    private final boolean[] inPenaltyBox = new boolean[MAX_PLAYERS];
 
     private int currentPlayer = 0;
     private boolean isGettingOutOfPenaltyBox;
