@@ -76,6 +76,11 @@ public class Game {
         return currentPlayer;
     }
 
+    // Seam for unit tests.
+    /*default */boolean isGettingOutOfPenaltyBox() {
+        return isGettingOutOfPenaltyBox;
+    }
+
     public void add(String playerName) {
         players.add(playerName);
 

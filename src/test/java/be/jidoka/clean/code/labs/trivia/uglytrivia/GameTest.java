@@ -169,4 +169,52 @@ public class GameTest {
         assertThat(game.getInPenaltyBox()[5]).isTrue();
     }
 
+    @Test
+    public void shouldReturnNullAnsweredQuestionAndWillNotGetOutOfPenaltyBox_onRoll_withEvenNumberAndCurrentPlayerIsInPenaltyBox() {
+        game.add("Jos");
+        game.add("Jan");
+        game.add("Jef");
+        game.add("An");
+        game.add("Annie");
+        game.add("An-Marie");
+
+        // Move current player to the first player AFTER he has gotten the wrongAnswer and is in the penalty box.
+        for (int i = 0; i < 6; i++) {
+            game.wrongAnswer();
+        }
+
+        assertThat(game.isGettingOutOfPenaltyBox()).isFalse();
+        assertThat(game.getCurrentPlayer()).isEqualTo(0);
+        assertThat(game.getInPenaltyBox()[0]).isTrue();
+
+        final String answeredQuestion = game.roll(2);
+
+        assertThat(answeredQuestion).isNull();
+        assertThat(game.isGettingOutOfPenaltyBox()).isFalse();
+    }
+
+    @Test
+    public void shouldReturnAnsweredQuestionAndWillGetOutOfPenaltyBox_onRoll_withOddNumberAndCurrentPlayerIsInPenaltyBox() {
+        game.add("Jos");
+        game.add("Jan");
+        game.add("Jef");
+        game.add("An");
+        game.add("Annie");
+        game.add("An-Marie");
+
+        // Move current player to the first player AFTER he has gotten the wrongAnswer and is in the penalty box.
+        for (int i = 0; i < 6; i++) {
+            game.wrongAnswer();
+        }
+
+        assertThat(game.isGettingOutOfPenaltyBox()).isFalse();
+        assertThat(game.getCurrentPlayer()).isEqualTo(0);
+        assertThat(game.getInPenaltyBox()[0]).isTrue();
+
+        final String answeredQuestion = game.roll(1);
+
+        assertThat(answeredQuestion).isNotNull();
+        assertThat(game.isGettingOutOfPenaltyBox()).isTrue();
+    }
+
 }
