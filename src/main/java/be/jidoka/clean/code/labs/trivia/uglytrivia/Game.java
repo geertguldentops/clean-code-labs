@@ -2,31 +2,32 @@ package be.jidoka.clean.code.labs.trivia.uglytrivia;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Game {
 
-    private final ArrayList players = new ArrayList();
+    private final List<String> players = new ArrayList<>();
     private final int[] places = new int[6];
     private final int[] purses = new int[6];
     private final boolean[] inPenaltyBox = new boolean[6];
-    private final LinkedList popQuestions = new LinkedList();
-    private final LinkedList scienceQuestions = new LinkedList();
-    private final LinkedList sportsQuestions = new LinkedList();
-    private final LinkedList rockQuestions = new LinkedList();
+    private final List<String> popQuestions = new LinkedList<>();
+    private final List<String> scienceQuestions = new LinkedList<>();
+    private final List<String> sportsQuestions = new LinkedList<>();
+    private final List<String> rockQuestions = new LinkedList<>();
 
     private int currentPlayer = 0;
     private boolean isGettingOutOfPenaltyBox;
 
     public Game() {
         for (int i = 0; i < 50; i++) {
-            popQuestions.addLast("Pop Question " + i);
-            scienceQuestions.addLast(("Science Question " + i));
-            sportsQuestions.addLast(("Sports Question " + i));
-            rockQuestions.addLast(createRockQuestion(i));
+            popQuestions.add("Pop Question " + i);
+            scienceQuestions.add(("Science Question " + i));
+            sportsQuestions.add(("Sports Question " + i));
+            rockQuestions.add(createRockQuestion(i));
         }
     }
 
-    public String createRockQuestion(int index) {
+    private String createRockQuestion(int index) {
         return "Rock Question " + index;
     }
 
@@ -44,7 +45,7 @@ public class Game {
         return true;
     }
 
-    public int howManyPlayers() {
+    private int howManyPlayers() {
         return players.size();
     }
 
@@ -84,27 +85,32 @@ public class Game {
     }
 
     private void askQuestion() {
-        if (currentCategory() == "Pop")
-            System.out.println(popQuestions.removeFirst());
-        if (currentCategory() == "Science")
-            System.out.println(scienceQuestions.removeFirst());
-        if (currentCategory() == "Sports")
-            System.out.println(sportsQuestions.removeFirst());
-        if (currentCategory() == "Rock")
-            System.out.println(rockQuestions.removeFirst());
+        switch (currentCategory()) {
+            case "Pop":
+                System.out.println(popQuestions.remove(0));
+                break;
+            case "Science":
+                System.out.println(scienceQuestions.remove(0));
+                break;
+            case "Sports":
+                System.out.println(sportsQuestions.remove(0));
+                break;
+            case "Rock":
+                System.out.println(rockQuestions.remove(0));
+                break;
+        }
     }
 
     private String currentCategory() {
-        if (places[currentPlayer] == 0) return "Pop";
-        if (places[currentPlayer] == 4) return "Pop";
-        if (places[currentPlayer] == 8) return "Pop";
-        if (places[currentPlayer] == 1) return "Science";
-        if (places[currentPlayer] == 5) return "Science";
-        if (places[currentPlayer] == 9) return "Science";
-        if (places[currentPlayer] == 2) return "Sports";
-        if (places[currentPlayer] == 6) return "Sports";
-        if (places[currentPlayer] == 10) return "Sports";
-        return "Rock";
+        if (places[currentPlayer] == 0 || places[currentPlayer] == 4 || places[currentPlayer] == 8) {
+            return "Pop";
+        } else if (places[currentPlayer] == 1 || places[currentPlayer] == 5 || places[currentPlayer] == 9) {
+            return "Science";
+        } else if (places[currentPlayer] == 2 || places[currentPlayer] == 6 || places[currentPlayer] == 10) {
+            return "Sports";
+        } else {
+            return "Rock";
+        }
     }
 
     public boolean wasCorrectlyAnswered() {
