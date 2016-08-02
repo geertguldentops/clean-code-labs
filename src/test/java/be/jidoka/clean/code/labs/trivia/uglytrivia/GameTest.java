@@ -73,7 +73,7 @@ public class GameTest {
         game.roll(5);
         game.roll(3);
 
-        assertThat(game.getPlaces()[0]).isEqualTo(0);
+        assertThat(game.getPlaces()[0]).isZero();
     }
 
     @Test
@@ -165,7 +165,7 @@ public class GameTest {
 
         game.wrongAnswer();
 
-        assertThat(game.getCurrentPlayer()).isEqualTo(0);
+        assertThat(game.getCurrentPlayer()).isZero();
         assertThat(game.getInPenaltyBox()[5]).isTrue();
     }
 
@@ -184,7 +184,7 @@ public class GameTest {
         }
 
         assertThat(game.isGettingOutOfPenaltyBox()).isFalse();
-        assertThat(game.getCurrentPlayer()).isEqualTo(0);
+        assertThat(game.getCurrentPlayer()).isZero();
         assertThat(game.getInPenaltyBox()[0]).isTrue();
 
         final String answeredQuestion = game.roll(2);
@@ -208,13 +208,58 @@ public class GameTest {
         }
 
         assertThat(game.isGettingOutOfPenaltyBox()).isFalse();
-        assertThat(game.getCurrentPlayer()).isEqualTo(0);
+        assertThat(game.getCurrentPlayer()).isZero();
         assertThat(game.getInPenaltyBox()[0]).isTrue();
 
         final String answeredQuestion = game.roll(1);
 
         assertThat(answeredQuestion).isNotNull();
         assertThat(game.isGettingOutOfPenaltyBox()).isTrue();
+    }
+
+    @Test
+    public void shouldReturnLoserAndAddGoldCoinToCurrentPlayerPurseAndMoveToNextPlayer_onWasCorrectlyAnswered_withCurrentPlayerIsNotInPenaltyBoxAndHasLessThan6GoldCoins() {
+        game.add("Jan");
+        game.add("Jos");
+
+        assertThat(game.getCurrentPlayer()).isZero();
+        assertThat(game.getInPenaltyBox()[0]).isFalse();
+        assertThat(game.getPurses()[0]).isZero();
+
+        final boolean isCurrentPlayerLoser = game.wasCorrectlyAnswered();
+        assertThat(isCurrentPlayerLoser).isTrue();
+
+        assertThat(game.getInPenaltyBox()[0]).isFalse();
+        assertThat(game.getPurses()[0]).isEqualTo(1);
+        assertThat(game.getCurrentPlayer()).isEqualTo(1);
+    }
+
+    @Test
+    public void shouldReturnWinnerWhichHas6GoldenCoinsInPurse_onWasCorrectlyAnswered_withCurrentPlayerHas6GoldCoins() {
+        game.add("Jos");
+        game.add("Jan");
+        game.add("Jef");
+        game.add("An");
+        game.add("Annie");
+        game.add("An-Marie");
+
+        // Each time a player answers correctly the game moves to the next player, so with 6 players, the winner will be first player, after 31 consecutive correct answers.
+
+        // Let everyone answer correctly at least 5 times.
+        for (int i = 0; i < 30; i++) {
+            game.wasCorrectlyAnswered();
+        }
+
+        assertThat(game.getCurrentPlayer()).isEqualTo(0);
+        assertThat(game.getPurses()[0]).isEqualTo(5);
+
+        // 6th correct answer of player 1!
+        final boolean isCurrentPlayerLoser = game.wasCorrectlyAnswered();
+        assertThat(isCurrentPlayerLoser).isFalse();
+
+        assertThat(game.getPurses()[0]).isEqualTo(6);
+        assertThat(game.getCurrentPlayer()).isEqualTo(1);
+        assertThat(game.getPurses()[1]).isEqualTo(5);
     }
 
 }
