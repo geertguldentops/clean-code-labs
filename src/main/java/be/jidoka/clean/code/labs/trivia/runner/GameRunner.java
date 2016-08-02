@@ -1,10 +1,8 @@
 package be.jidoka.clean.code.labs.trivia.runner;
 
-
 import be.jidoka.clean.code.labs.trivia.uglytrivia.Game;
 
 import java.util.Random;
-
 
 public class GameRunner {
 
