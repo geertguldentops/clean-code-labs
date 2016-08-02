@@ -171,11 +171,11 @@ public class Game {
                 System.out.println(players.get(currentPlayer) + " now has " + purses[currentPlayer] + " Gold Coins.");
 
                 boolean winner = didPlayerWin();
-                choseNextPlayer();
+                moveToNextPlayer();
 
                 return winner;
             } else {
-                choseNextPlayer();
+                moveToNextPlayer();
 
                 return true;
             }
@@ -187,7 +187,7 @@ public class Game {
             System.out.println(players.get(currentPlayer) + " now has " + purses[currentPlayer] + " Gold Coins.");
 
             boolean winner = didPlayerWin();
-            choseNextPlayer();
+            moveToNextPlayer();
 
             return winner;
         }
@@ -197,7 +197,7 @@ public class Game {
         return !(purses[currentPlayer] == 6);
     }
 
-    private void choseNextPlayer() {
+    private void moveToNextPlayer() {
         currentPlayer++;
 
         if (currentPlayer == players.size()) {
@@ -211,7 +211,7 @@ public class Game {
 
         inPenaltyBox[currentPlayer] = true;
 
-        choseNextPlayer();
+        moveToNextPlayer();
     }
 
 }

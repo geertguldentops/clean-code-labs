@@ -250,7 +250,7 @@ public class GameTest {
             game.wasCorrectlyAnswered();
         }
 
-        assertThat(game.getCurrentPlayer()).isEqualTo(0);
+        assertThat(game.getCurrentPlayer()).isZero();
         assertThat(game.getPurses()[0]).isEqualTo(5);
 
         // 6th correct answer of player 1!
@@ -260,6 +260,35 @@ public class GameTest {
         assertThat(game.getPurses()[0]).isEqualTo(6);
         assertThat(game.getCurrentPlayer()).isEqualTo(1);
         assertThat(game.getPurses()[1]).isEqualTo(5);
+    }
+
+    @Test
+    public void shouldReturnLoserAndAddNoGoldCoinAddedToPurseAndCurrentPlayerStaysInPenaltyBoxAndMoveToNextPlayer_onWasCorrectlyAnswered_withCurrentPlayerIsInPenaltyBoxAndNotGettingOut() {
+        game.add("Jos");
+        game.add("Jan");
+        game.add("Jef");
+        game.add("An");
+        game.add("Annie");
+        game.add("An-Marie");
+
+        // Everyone answers wrong once.
+        for (int i = 0; i < 6; i++) {
+            game.wrongAnswer();
+        }
+
+        assertThat(game.getCurrentPlayer()).isZero();
+        assertThat(game.getInPenaltyBox()[0]).isTrue();
+        assertThat(game.isGettingOutOfPenaltyBox()).isFalse();
+        assertThat(game.getPurses()[0]).isZero();
+
+        final boolean isCurrentPlayerLoser = game.wasCorrectlyAnswered();
+        assertThat(isCurrentPlayerLoser).isTrue();
+
+        assertThat(game.getInPenaltyBox()[0]).isTrue();
+        assertThat(game.isGettingOutOfPenaltyBox()).isFalse();
+        assertThat(game.getPurses()[0]).isZero();
+
+        assertThat(game.getCurrentPlayer()).isEqualTo(1);
     }
 
 }
