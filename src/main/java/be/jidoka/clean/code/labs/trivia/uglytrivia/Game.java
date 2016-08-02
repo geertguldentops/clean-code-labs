@@ -95,7 +95,7 @@ public class Game {
 
                 System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
 
-                movePlayerToNewPosition(roll);
+                moveCurrentPlayerToNewPosition(roll);
 
                 return askQuestion();
             } else {
@@ -106,13 +106,13 @@ public class Game {
                 return null;
             }
         } else {
-            movePlayerToNewPosition(roll);
+            moveCurrentPlayerToNewPosition(roll);
 
             return askQuestion();
         }
     }
 
-    private void movePlayerToNewPosition(int roll) {
+    private void moveCurrentPlayerToNewPosition(int roll) {
         places[currentPlayer] = places[currentPlayer] + roll;
 
         if (places[currentPlayer] > LAST_BOARD_POSITION) {
@@ -165,13 +165,11 @@ public class Game {
                 System.out.println(players.get(currentPlayer) + " now has " + purses[currentPlayer] + " Gold Coins.");
 
                 boolean winner = didPlayerWin();
-                currentPlayer++;
-                if (currentPlayer == players.size()) currentPlayer = 0;
+                choseNextPlayer();
 
                 return winner;
             } else {
-                currentPlayer++;
-                if (currentPlayer == players.size()) currentPlayer = 0;
+                choseNextPlayer();
 
                 return true;
             }
@@ -183,11 +181,21 @@ public class Game {
             System.out.println(players.get(currentPlayer) + " now has " + purses[currentPlayer] + " Gold Coins.");
 
             boolean winner = didPlayerWin();
-
-            currentPlayer++;
-            if (currentPlayer == players.size()) currentPlayer = 0;
+            choseNextPlayer();
 
             return winner;
+        }
+    }
+
+    private boolean didPlayerWin() {
+        return !(purses[currentPlayer] == 6);
+    }
+
+    private void choseNextPlayer() {
+        currentPlayer++;
+
+        if (currentPlayer == players.size()) {
+            currentPlayer = 0;
         }
     }
 
@@ -197,15 +205,7 @@ public class Game {
 
         inPenaltyBox[currentPlayer] = true;
 
-        currentPlayer++;
-
-        if (currentPlayer == players.size()) {
-            currentPlayer = 0;
-        }
-    }
-
-    private boolean didPlayerWin() {
-        return !(purses[currentPlayer] == 6);
+        choseNextPlayer();
     }
 
 }
