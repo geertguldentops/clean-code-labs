@@ -64,6 +64,11 @@ public class Game {
         return inPenaltyBox;
     }
 
+    // Seam for unit tests.
+    /*default */List<String> getPlayers() {
+        return players;
+    }
+
     public void add(String playerName) {
         players.add(playerName);
 
