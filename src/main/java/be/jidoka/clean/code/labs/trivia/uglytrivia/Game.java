@@ -3,28 +3,30 @@ package be.jidoka.clean.code.labs.trivia.uglytrivia;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Game {
 
-    private final List<String> players = new ArrayList<>();
-    private final int[] places = new int[6];
-    private final int[] purses = new int[6];
-    private final boolean[] inPenaltyBox = new boolean[6];
     private final List<String> popQuestions = new LinkedList<>();
     private final List<String> scienceQuestions = new LinkedList<>();
     private final List<String> sportsQuestions = new LinkedList<>();
     private final List<String> rockQuestions = new LinkedList<>();
 
+    private final List<String> players = new ArrayList<>();
+    private final int[] places = new int[6];
+    private final int[] purses = new int[6];
+    private final boolean[] inPenaltyBox = new boolean[6];
+
     private int currentPlayer = 0;
     private boolean isGettingOutOfPenaltyBox;
 
     public Game() {
-        for (int i = 0; i < 50; i++) {
+        IntStream.range(1, 51).forEach(i -> {
             popQuestions.add("Pop Question " + i);
-            scienceQuestions.add(("Science Question " + i));
-            sportsQuestions.add(("Sports Question " + i));
-            rockQuestions.add(createRockQuestion(i));
-        }
+            scienceQuestions.add("Science Question " + i);
+            sportsQuestions.add("Sports Question " + i);
+            rockQuestions.add("Rock Question " + i);
+        });
     }
 
     // Seam for unit tests.
@@ -45,10 +47,6 @@ public class Game {
     // Seam for unit tests.
     /*default */List<String> getRockQuestions() {
         return rockQuestions;
-    }
-
-    private String createRockQuestion(int index) {
-        return "Rock Question " + index;
     }
 
     public boolean add(String playerName) {
