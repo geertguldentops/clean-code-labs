@@ -52,4 +52,41 @@ public class GameTest {
         assertThat(game.getPlayers()).containsOnly("Jos", "Jan", "Jef");
     }
 
+    @Test
+    public void shouldMovePlayerToNewPosition_onRoll_withRollLessThanOrEqualTo11() {
+        game.add("Jos");
+
+        assertThat(game.getPlaces()[0]).isZero();
+
+        game.roll(4);
+
+        assertThat(game.getPlaces()[0]).isEqualTo(4);
+    }
+
+    @Test
+    public void shouldMovePlayerToBeginOfBoard_onRoll_withRollExactly12() {
+        game.add("Jos");
+
+        assertThat(game.getPlaces()[0]).isZero();
+
+        game.roll(4);
+        game.roll(5);
+        game.roll(3);
+
+        assertThat(game.getPlaces()[0]).isEqualTo(0);
+    }
+
+    @Test
+    public void shouldMovePlayerToPositionMinusBoardSize_onRoll_withRollMoreThan12() {
+        game.add("Jos");
+
+        assertThat(game.getPlaces()[0]).isZero();
+
+        game.roll(5);
+        game.roll(5);
+        game.roll(3);
+
+        assertThat(game.getPlaces()[0]).isEqualTo(1);
+    }
+
 }

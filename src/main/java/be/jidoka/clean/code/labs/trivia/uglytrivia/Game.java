@@ -7,6 +7,8 @@ import java.util.stream.IntStream;
 
 public class Game {
 
+    private static final int LAST_BOARD_POSITION = 11;
+
     private final List<String> popQuestions = new LinkedList<>();
     private final List<String> scienceQuestions = new LinkedList<>();
     private final List<String> sportsQuestions = new LinkedList<>();
@@ -76,6 +78,7 @@ public class Game {
         System.out.println("They are player number " + players.size());
     }
 
+    // Roll is randomly called with a value between 1 and 5.
     public void roll(int roll) {
         System.out.println(players.get(currentPlayer) + " is the current player");
         System.out.println("They have rolled a " + roll);
@@ -86,12 +89,7 @@ public class Game {
 
                 System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
 
-                places[currentPlayer] = places[currentPlayer] + roll;
-                if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
-
-                System.out.println(players.get(currentPlayer) + "'s new location is " + places[currentPlayer]);
-
-                System.out.println("The category is " + currentCategory());
+                movePlayerToNewPosition(roll);
 
                 askQuestion();
             } else {
@@ -101,18 +99,28 @@ public class Game {
             }
 
         } else {
-            places[currentPlayer] = places[currentPlayer] + roll;
-            if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
-
-            System.out.println(players.get(currentPlayer) + "'s new location is " + places[currentPlayer]);
-            System.out.println("The category is " + currentCategory());
+            movePlayerToNewPosition(roll);
 
             askQuestion();
         }
     }
 
+    private void movePlayerToNewPosition(int roll) {
+        places[currentPlayer] = places[currentPlayer] + roll;
+
+        if (places[currentPlayer] > LAST_BOARD_POSITION) {
+            places[currentPlayer] = places[currentPlayer] - (LAST_BOARD_POSITION + 1);
+        }
+
+        System.out.println(players.get(currentPlayer) + "'s new location is " + places[currentPlayer]);
+    }
+
     private void askQuestion() {
-        switch (currentCategory()) {
+        final String currentCategory = determineCurrentCategory();
+
+        System.out.println("The category is " + currentCategory);
+
+        switch (currentCategory) {
             case "Pop":
                 System.out.println(popQuestions.remove(0));
                 break;
@@ -128,7 +136,7 @@ public class Game {
         }
     }
 
-    private String currentCategory() {
+    private String determineCurrentCategory() {
         if (places[currentPlayer] == 0 || places[currentPlayer] == 4 || places[currentPlayer] == 8) {
             return "Pop";
         } else if (places[currentPlayer] == 1 || places[currentPlayer] == 5 || places[currentPlayer] == 9) {
