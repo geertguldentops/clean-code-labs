@@ -291,4 +291,37 @@ public class GameTest {
         assertThat(game.getCurrentPlayer()).isEqualTo(1);
     }
 
+    @Test
+    public void shouldReturnLoserAndAddGoldCoinToPurseAndMoveToNextPlayer_onWasCorrectlyAnswered_withCurrentPlayerIsInPenaltyBoxAndGettingOut() {
+        game.add("Jos");
+        game.add("Jan");
+        game.add("Jef");
+        game.add("An");
+        game.add("Annie");
+        game.add("An-Marie");
+
+        // Everyone answers wrong once.
+        for (int i = 0; i < 6; i++) {
+            game.wrongAnswer();
+        }
+
+        // Trigger current player "getting out of the penalty box".
+        game.roll(1);
+
+        assertThat(game.getCurrentPlayer()).isZero();
+        assertThat(game.getInPenaltyBox()[0]).isTrue();
+        assertThat(game.isGettingOutOfPenaltyBox()).isTrue();
+        assertThat(game.getPurses()[0]).isZero();
+
+        final boolean isCurrentPlayerLoser = game.wasCorrectlyAnswered();
+        assertThat(isCurrentPlayerLoser).isTrue();
+
+        // Note that the player actually does NOT leave the penalty box!
+        assertThat(game.getInPenaltyBox()[0]).isTrue();
+        assertThat(game.isGettingOutOfPenaltyBox()).isTrue();
+        assertThat(game.getPurses()[0]).isEqualTo(1);
+
+        assertThat(game.getCurrentPlayer()).isEqualTo(1);
+    }
+
 }
