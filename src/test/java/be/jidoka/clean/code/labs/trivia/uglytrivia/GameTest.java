@@ -89,4 +89,40 @@ public class GameTest {
         assertThat(game.getPlaces()[0]).isEqualTo(1);
     }
 
+    @Test
+    public void shouldReturnPopQuestions_onRoll_withRollMovesYouToPosition4Or8Or0() {
+        game.add("Jos");
+
+        assertThat(game.roll(4)).isEqualTo("Pop Question 1");
+        assertThat(game.roll(4)).isEqualTo("Pop Question 2");
+        assertThat(game.roll(4)).isEqualTo("Pop Question 3");
+    }
+
+    @Test
+    public void shouldReturnScienceQuestions_onRoll_withRollMovesYouToPosition1Or5Or9() {
+        game.add("Jos");
+
+        assertThat(game.roll(1)).isEqualTo("Science Question 1");
+        assertThat(game.roll(4)).isEqualTo("Science Question 2");
+        assertThat(game.roll(4)).isEqualTo("Science Question 3");
+    }
+
+    @Test
+    public void shouldReturnSportsQuestions_onRoll_withRollMovesYouToPosition2Or6Or10() {
+        game.add("Jos");
+
+        assertThat(game.roll(2)).isEqualTo("Sports Question 1");
+        assertThat(game.roll(4)).isEqualTo("Sports Question 2");
+        assertThat(game.roll(4)).isEqualTo("Sports Question 3");
+    }
+
+    @Test
+    public void shouldReturnRockQuestions_onRoll_withRollMovesYouToPosition3Or7Or11() {
+        game.add("Jos");
+
+        assertThat(game.roll(3)).isEqualTo("Rock Question 1");
+        assertThat(game.roll(4)).isEqualTo("Rock Question 2");
+        assertThat(game.roll(4)).isEqualTo("Rock Question 3");
+    }
+
 }

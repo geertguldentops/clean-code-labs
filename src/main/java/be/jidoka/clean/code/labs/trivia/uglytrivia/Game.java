@@ -79,7 +79,8 @@ public class Game {
     }
 
     // Roll is randomly called with a value between 1 and 5.
-    public void roll(int roll) {
+    // Returning a String is a Seam for unit tests.
+    public String roll(int roll) {
         System.out.println(players.get(currentPlayer) + " is the current player");
         System.out.println("They have rolled a " + roll);
 
@@ -91,17 +92,18 @@ public class Game {
 
                 movePlayerToNewPosition(roll);
 
-                askQuestion();
+                return askQuestion();
             } else {
                 System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
 
                 isGettingOutOfPenaltyBox = false;
-            }
 
+                return null;
+            }
         } else {
             movePlayerToNewPosition(roll);
 
-            askQuestion();
+            return askQuestion();
         }
     }
 
@@ -115,36 +117,36 @@ public class Game {
         System.out.println(players.get(currentPlayer) + "'s new location is " + places[currentPlayer]);
     }
 
-    private void askQuestion() {
-        final String currentCategory = determineCurrentCategory();
-
-        System.out.println("The category is " + currentCategory);
-
-        switch (currentCategory) {
-            case "Pop":
-                System.out.println(popQuestions.remove(0));
-                break;
-            case "Science":
-                System.out.println(scienceQuestions.remove(0));
-                break;
-            case "Sports":
-                System.out.println(sportsQuestions.remove(0));
-                break;
-            case "Rock":
-                System.out.println(rockQuestions.remove(0));
-                break;
-        }
-    }
-
-    private String determineCurrentCategory() {
+    // Returning a String is a Seam for unit tests.
+    private String askQuestion() {
         if (places[currentPlayer] == 0 || places[currentPlayer] == 4 || places[currentPlayer] == 8) {
-            return "Pop";
+            System.out.println("The category is Pop");
+
+            final String askedQuestion = popQuestions.remove(0);
+            System.out.println(askedQuestion);
+
+            return askedQuestion;
         } else if (places[currentPlayer] == 1 || places[currentPlayer] == 5 || places[currentPlayer] == 9) {
-            return "Science";
+            System.out.println("The category is Science");
+
+            final String askedQuestion = scienceQuestions.remove(0);
+            System.out.println(askedQuestion);
+
+            return askedQuestion;
         } else if (places[currentPlayer] == 2 || places[currentPlayer] == 6 || places[currentPlayer] == 10) {
-            return "Sports";
+            System.out.println("The category is Sports");
+
+            final String askedQuestion = sportsQuestions.remove(0);
+            System.out.println(askedQuestion);
+
+            return askedQuestion;
         } else {
-            return "Rock";
+            System.out.println("The category is Rock");
+
+            final String askedQuestion = rockQuestions.remove(0);
+            System.out.println(askedQuestion);
+
+            return askedQuestion;
         }
     }
 
