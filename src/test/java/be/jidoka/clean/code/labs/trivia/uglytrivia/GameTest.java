@@ -125,4 +125,48 @@ public class GameTest {
         assertThat(game.roll(4)).isEqualTo("Rock Question 3");
     }
 
+    @Test
+    public void shouldMoveCurrentPlayerToPenaltyBoxAndMoveCurrentPlayerUpByOne_onWrongAnswer_withCurrentPlayerIsNotLastPlayer() {
+        game.add("Jos");
+        game.add("Jan");
+
+        assertThat(game.getCurrentPlayer()).isZero();
+        assertThat(game.getInPenaltyBox()[0]).isFalse();
+        assertThat(game.getInPenaltyBox()[1]).isFalse();
+
+        game.wrongAnswer();
+
+        assertThat(game.getCurrentPlayer()).isEqualTo(1);
+        assertThat(game.getInPenaltyBox()[0]).isTrue();
+        assertThat(game.getInPenaltyBox()[1]).isFalse();
+    }
+
+    @Test
+    public void shouldMoveCurrentPlayerToPenaltyBoxAndMoveCurrentPlayerToFirstPlayer_onWrongAnswer_withCurrentPlayerIsLastPlayer() {
+        game.add("Jos");
+        game.add("Jan");
+        game.add("Jef");
+        game.add("An");
+        game.add("Annie");
+        game.add("An-Marie");
+
+        // Move current player to the last player, An-Marie.
+        for (int i = 0; i < 5; i++) {
+            game.wrongAnswer();
+        }
+
+        assertThat(game.getCurrentPlayer()).isEqualTo(5);
+        assertThat(game.getInPenaltyBox()[0]).isTrue();
+        assertThat(game.getInPenaltyBox()[1]).isTrue();
+        assertThat(game.getInPenaltyBox()[2]).isTrue();
+        assertThat(game.getInPenaltyBox()[3]).isTrue();
+        assertThat(game.getInPenaltyBox()[4]).isTrue();
+        assertThat(game.getInPenaltyBox()[5]).isFalse();
+
+        game.wrongAnswer();
+
+        assertThat(game.getCurrentPlayer()).isEqualTo(0);
+        assertThat(game.getInPenaltyBox()[5]).isTrue();
+    }
+
 }

@@ -71,6 +71,11 @@ public class Game {
         return players;
     }
 
+    // Seam for unit tests.
+    /*default */int getCurrentPlayer() {
+        return currentPlayer;
+    }
+
     public void add(String playerName) {
         players.add(playerName);
 
@@ -189,16 +194,17 @@ public class Game {
         }
     }
 
-    public boolean wrongAnswer() {
+    public void wrongAnswer() {
         System.out.println("Question was incorrectly answered");
         System.out.println(players.get(currentPlayer) + " was sent to the penalty box");
 
         inPenaltyBox[currentPlayer] = true;
 
         currentPlayer++;
-        if (currentPlayer == players.size()) currentPlayer = 0;
 
-        return true;
+        if (currentPlayer == players.size()) {
+            currentPlayer = 0;
+        }
     }
 
     private boolean didPlayerWin() {
