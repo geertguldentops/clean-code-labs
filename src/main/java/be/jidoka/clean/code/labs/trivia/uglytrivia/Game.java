@@ -162,10 +162,7 @@ public class Game {
 
                 purses[currentPlayer]++;
 
-                System.out.println(players.get(currentPlayer)
-                        + " now has "
-                        + purses[currentPlayer]
-                        + " Gold Coins.");
+                System.out.println(players.get(currentPlayer) + " now has " + purses[currentPlayer] + " Gold Coins.");
 
                 boolean winner = didPlayerWin();
                 currentPlayer++;
@@ -179,7 +176,7 @@ public class Game {
                 return true;
             }
         } else {
-            System.out.println("Answer was corrent!!!!");
+            System.out.println("Answer was correct!!!!");
 
             purses[currentPlayer]++;
 
