@@ -49,22 +49,26 @@ public class Game {
         return rockQuestions;
     }
 
-    public boolean add(String playerName) {
+    // Seam for unit tests.
+    /*default */int[] getPlaces() {
+        return places;
+    }
+
+    // Seam for unit tests.
+    /*default */int[] getPurses() {
+        return purses;
+    }
+
+    // Seam for unit tests.
+    /*default */boolean[] getInPenaltyBox() {
+        return inPenaltyBox;
+    }
+
+    public void add(String playerName) {
         players.add(playerName);
-
-        places[howManyPlayers()] = 0;
-        purses[howManyPlayers()] = 0;
-
-        inPenaltyBox[howManyPlayers()] = false;
 
         System.out.println(playerName + " was added");
         System.out.println("They are player number " + players.size());
-
-        return true;
-    }
-
-    private int howManyPlayers() {
-        return players.size();
     }
 
     public void roll(int roll) {

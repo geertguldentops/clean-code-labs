@@ -42,4 +42,16 @@ public class GameTest {
                 .containsSequence("Rock Question 45", "Rock Question 46", "Rock Question 47", "Rock Question 48", "Rock Question 49");
     }
 
+    @Test
+    public void shouldAddInitialPlaceAndPurseAndPenaltyBoxForPlayerMultiplePlayers_onMultipleAdds_withPlayerNames() {
+        final Game game = new Game();
+        game.add("Jos");
+        game.add("Jan");
+        game.add("Jef");
+
+        assertThat(game.getPlaces()).hasSize(6).containsOnly(0);
+        assertThat(game.getPurses()).hasSize(6).containsOnly(0);
+        assertThat(game.getInPenaltyBox()).hasSize(6).containsOnly(false);
+    }
+
 }
