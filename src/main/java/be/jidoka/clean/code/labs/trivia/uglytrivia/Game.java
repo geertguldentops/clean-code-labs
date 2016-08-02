@@ -27,6 +27,26 @@ public class Game {
         }
     }
 
+    // Seam for unit tests.
+    /*default */List<String> getPopQuestions() {
+        return popQuestions;
+    }
+
+    // Seam for unit tests.
+    /*default */List<String> getScienceQuestions() {
+        return scienceQuestions;
+    }
+
+    // Seam for unit tests.
+    /*default */List<String> getSportsQuestions() {
+        return sportsQuestions;
+    }
+
+    // Seam for unit tests.
+    /*default */List<String> getRockQuestions() {
+        return rockQuestions;
+    }
+
     private String createRockQuestion(int index) {
         return "Rock Question " + index;
     }
