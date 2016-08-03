@@ -96,7 +96,13 @@ public class Game {
         System.out.println("They have rolled a " + roll);
 
         if (inPenaltyBox[currentPlayer]) {
-            if (roll % 2 != 0) {
+            if (isEvenRoll(roll)) {
+                System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
+
+                isGettingOutOfPenaltyBox = false;
+
+                return null;
+            } else {
                 isGettingOutOfPenaltyBox = true;
 
                 System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
@@ -104,18 +110,16 @@ public class Game {
                 moveCurrentPlayerToNewPosition(roll);
 
                 return askQuestion();
-            } else {
-                System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
-
-                isGettingOutOfPenaltyBox = false;
-
-                return null;
             }
         } else {
             moveCurrentPlayerToNewPosition(roll);
 
             return askQuestion();
         }
+    }
+
+    private boolean isEvenRoll(int roll) {
+        return roll % 2 == 0;
     }
 
     private void moveCurrentPlayerToNewPosition(int roll) {
@@ -170,10 +174,10 @@ public class Game {
 
                 System.out.println(players.get(currentPlayer) + " now has " + purses[currentPlayer] + " Gold Coins.");
 
-                boolean winner = didPlayerWin();
+                boolean loser = !didPlayerWin();
                 moveToNextPlayer();
 
-                return winner;
+                return loser;
             } else {
                 moveToNextPlayer();
 
@@ -186,15 +190,15 @@ public class Game {
 
             System.out.println(players.get(currentPlayer) + " now has " + purses[currentPlayer] + " Gold Coins.");
 
-            boolean winner = didPlayerWin();
+            boolean loser = !didPlayerWin();
             moveToNextPlayer();
 
-            return winner;
+            return loser;
         }
     }
 
     private boolean didPlayerWin() {
-        return !(purses[currentPlayer] == 6);
+        return purses[currentPlayer] == 6;
     }
 
     private void moveToNextPlayer() {
