@@ -9,7 +9,7 @@ import static java.time.DayOfWeek.SUNDAY;
 import static java.time.DayOfWeek.THURSDAY;
 import static java.time.DayOfWeek.TUESDAY;
 import static java.time.DayOfWeek.WEDNESDAY;
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class WeekendAdditionTest {
 
