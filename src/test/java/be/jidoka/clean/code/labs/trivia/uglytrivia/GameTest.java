@@ -1,50 +1,50 @@
 package be.jidoka.clean.code.labs.trivia.uglytrivia;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GameTest {
+class GameTest {
 
     private final Game game = new Game();
 
     @Test
-    public void shouldCreate50PopQuestions_onCreateGame() {
+    void shouldCreate50PopQuestions_onCreateGame() {
         assertThat(game.getPopQuestions())
                 .hasSize(50)
                 .containsSequence("Pop Question 1", "Pop Question 2", "Pop Question 3", "Pop Question 4", "Pop Question 5");
     }
 
     @Test
-    public void shouldCreate50ScienceQuestions_onCreateGame() {
+    void shouldCreate50ScienceQuestions_onCreateGame() {
         assertThat(game.getScienceQuestions())
                 .hasSize(50)
                 .containsSequence("Science Question 8", "Science Question 9", "Science Question 10", "Science Question 11");
     }
 
     @Test
-    public void shouldCreate50SportsQuestions_onCreateGame() {
+    void shouldCreate50SportsQuestions_onCreateGame() {
         assertThat(game.getSportsQuestions())
                 .hasSize(50)
                 .containsSequence("Sports Question 22", "Sports Question 23", "Sports Question 24", "Sports Question 25", "Sports Question 26");
     }
 
     @Test
-    public void shouldCreate50RockQuestions_onCreateGame() {
+    void shouldCreate50RockQuestions_onCreateGame() {
         assertThat(game.getRockQuestions())
                 .hasSize(50)
                 .containsSequence("Rock Question 45", "Rock Question 46", "Rock Question 47", "Rock Question 48", "Rock Question 49");
     }
 
     @Test
-    public void shouldInitialisePlacesAndPursesAndPenaltyBoxes_onCreateGame() {
+    void shouldInitialisePlacesAndPursesAndPenaltyBoxes_onCreateGame() {
         assertThat(game.getPlaces()).hasSize(6).containsOnly(0);
         assertThat(game.getPurses()).hasSize(6).containsOnly(0);
         assertThat(game.getInPenaltyBox()).hasSize(6).containsOnly(false);
     }
 
     @Test
-    public void shouldAddPlayers_onMultipleAdds_withPlayerNames() {
+    void shouldAddPlayers_onMultipleAdds_withPlayerNames() {
         game.add("Jos");
         game.add("Jan");
         game.add("Jef");
@@ -53,7 +53,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldMovePlayerToNewPosition_onRoll_withRollLessThanOrEqualTo11() {
+    void shouldMovePlayerToNewPosition_onRoll_withRollLessThanOrEqualTo11() {
         game.add("Jos");
 
         assertThat(game.getPlaces()[0]).isZero();
@@ -64,7 +64,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldMovePlayerToBeginOfBoard_onRoll_withRollExactly12() {
+    void shouldMovePlayerToBeginOfBoard_onRoll_withRollExactly12() {
         game.add("Jos");
 
         assertThat(game.getPlaces()[0]).isZero();
@@ -77,7 +77,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldMovePlayerToPositionMinusBoardSize_onRoll_withRollMoreThan12() {
+    void shouldMovePlayerToPositionMinusBoardSize_onRoll_withRollMoreThan12() {
         game.add("Jos");
 
         assertThat(game.getPlaces()[0]).isZero();
@@ -90,7 +90,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldReturnPopQuestions_onRoll_withRollMovesYouToPosition4Or8Or0() {
+    void shouldReturnPopQuestions_onRoll_withRollMovesYouToPosition4Or8Or0() {
         game.add("Jos");
 
         assertThat(game.roll(4)).isEqualTo("Pop Question 1");
@@ -99,7 +99,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldReturnScienceQuestions_onRoll_withRollMovesYouToPosition1Or5Or9() {
+    void shouldReturnScienceQuestions_onRoll_withRollMovesYouToPosition1Or5Or9() {
         game.add("Jos");
 
         assertThat(game.roll(1)).isEqualTo("Science Question 1");
@@ -108,7 +108,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldReturnSportsQuestions_onRoll_withRollMovesYouToPosition2Or6Or10() {
+    void shouldReturnSportsQuestions_onRoll_withRollMovesYouToPosition2Or6Or10() {
         game.add("Jos");
 
         assertThat(game.roll(2)).isEqualTo("Sports Question 1");
@@ -117,7 +117,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldReturnRockQuestions_onRoll_withRollMovesYouToPosition3Or7Or11() {
+    void shouldReturnRockQuestions_onRoll_withRollMovesYouToPosition3Or7Or11() {
         game.add("Jos");
 
         assertThat(game.roll(3)).isEqualTo("Rock Question 1");
@@ -126,7 +126,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldMoveCurrentPlayerToPenaltyBoxAndMoveCurrentPlayerUpByOne_onWrongAnswer_withCurrentPlayerIsNotLastPlayer() {
+    void shouldMoveCurrentPlayerToPenaltyBoxAndMoveCurrentPlayerUpByOne_onWrongAnswer_withCurrentPlayerIsNotLastPlayer() {
         game.add("Jos");
         game.add("Jan");
 
@@ -142,7 +142,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldMoveCurrentPlayerToPenaltyBoxAndMoveCurrentPlayerToFirstPlayer_onWrongAnswer_withCurrentPlayerIsLastPlayer() {
+    void shouldMoveCurrentPlayerToPenaltyBoxAndMoveCurrentPlayerToFirstPlayer_onWrongAnswer_withCurrentPlayerIsLastPlayer() {
         game.add("Jos");
         game.add("Jan");
         game.add("Jef");
@@ -170,7 +170,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldReturnNullAnsweredQuestionAndWillNotGetOutOfPenaltyBox_onRoll_withEvenNumberAndCurrentPlayerIsInPenaltyBox() {
+    void shouldReturnNullAnsweredQuestionAndWillNotGetOutOfPenaltyBox_onRoll_withEvenNumberAndCurrentPlayerIsInPenaltyBox() {
         game.add("Jos");
         game.add("Jan");
         game.add("Jef");
@@ -194,7 +194,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldReturnAnsweredQuestionAndWillGetOutOfPenaltyBox_onRoll_withOddNumberAndCurrentPlayerIsInPenaltyBox() {
+    void shouldReturnAnsweredQuestionAndWillGetOutOfPenaltyBox_onRoll_withOddNumberAndCurrentPlayerIsInPenaltyBox() {
         game.add("Jos");
         game.add("Jan");
         game.add("Jef");
@@ -218,7 +218,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldReturnLoserAndAddGoldCoinToCurrentPlayerPurseAndMoveToNextPlayer_onWasCorrectlyAnswered_withCurrentPlayerIsNotInPenaltyBoxAndHasLessThan6GoldCoins() {
+    void shouldReturnLoserAndAddGoldCoinToCurrentPlayerPurseAndMoveToNextPlayer_onWasCorrectlyAnswered_withCurrentPlayerIsNotInPenaltyBoxAndHasLessThan6GoldCoins() {
         game.add("Jan");
         game.add("Jos");
 
@@ -235,7 +235,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldReturnWinnerWhichHas6GoldenCoinsInPurse_onWasCorrectlyAnswered_withCurrentPlayerHas6GoldCoins() {
+    void shouldReturnWinnerWhichHas6GoldenCoinsInPurse_onWasCorrectlyAnswered_withCurrentPlayerHas6GoldCoins() {
         game.add("Jos");
         game.add("Jan");
         game.add("Jef");
@@ -263,7 +263,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldReturnLoserAndAddNoGoldCoinAddedToPurseAndCurrentPlayerStaysInPenaltyBoxAndMoveToNextPlayer_onWasCorrectlyAnswered_withCurrentPlayerIsInPenaltyBoxAndNotGettingOut() {
+    void shouldReturnLoserAndAddNoGoldCoinAddedToPurseAndCurrentPlayerStaysInPenaltyBoxAndMoveToNextPlayer_onWasCorrectlyAnswered_withCurrentPlayerIsInPenaltyBoxAndNotGettingOut() {
         game.add("Jos");
         game.add("Jan");
         game.add("Jef");
@@ -292,7 +292,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldReturnLoserAndAddGoldCoinToPurseAndMoveToNextPlayer_onWasCorrectlyAnswered_withCurrentPlayerIsInPenaltyBoxAndGettingOut() {
+    void shouldReturnLoserAndAddGoldCoinToPurseAndMoveToNextPlayer_onWasCorrectlyAnswered_withCurrentPlayerIsInPenaltyBoxAndGettingOut() {
         game.add("Jos");
         game.add("Jan");
         game.add("Jef");

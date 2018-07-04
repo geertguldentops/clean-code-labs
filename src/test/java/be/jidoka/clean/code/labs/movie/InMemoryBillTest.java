@@ -1,6 +1,6 @@
 package be.jidoka.clean.code.labs.movie;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static java.time.DayOfWeek.MONDAY;
 import static java.time.DayOfWeek.SATURDAY;
@@ -8,12 +8,12 @@ import static java.time.DayOfWeek.THURSDAY;
 import static java.time.DayOfWeek.TUESDAY;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class InMemoryBillTest {
+class InMemoryBillTest {
 
     private final Bill bill = new InMemoryBill();
 
     @Test
-    public void shouldReturnGeneralAdmissionPrice_onFinishPurchase_withAddSingleGeneralAdmissionTicket() {
+    void shouldReturnGeneralAdmissionPrice_onFinishPurchase_withAddSingleGeneralAdmissionTicket() {
         bill.startPurchase(112, MONDAY, false, false);
 
         bill.addTicket(27, false);
@@ -24,7 +24,7 @@ public class InMemoryBillTest {
     }
 
     @Test
-    public void shouldReturnGeneralAdmissionPriceMultipliedByAmountOfTickets_onFinishPurchase_withAddMultipleGeneralAdmissionTickets() {
+    void shouldReturnGeneralAdmissionPriceMultipliedByAmountOfTickets_onFinishPurchase_withAddMultipleGeneralAdmissionTickets() {
         bill.startPurchase(112, MONDAY, false, false);
 
         bill.addTicket(27, false);
@@ -36,7 +36,7 @@ public class InMemoryBillTest {
     }
 
     @Test
-    public void shouldReturnStudentPrice_onFinishPurchase_withAddSingleStudentTicket() {
+    void shouldReturnStudentPrice_onFinishPurchase_withAddSingleStudentTicket() {
         bill.startPurchase(112, MONDAY, false, false);
 
         bill.addTicket(21, true);
@@ -47,7 +47,7 @@ public class InMemoryBillTest {
     }
 
     @Test
-    public void shouldReturnSeniorCitizenPrice_onFinishPurchase_withAddSingleSeniorCitizenTicket() {
+    void shouldReturnSeniorCitizenPrice_onFinishPurchase_withAddSingleSeniorCitizenTicket() {
         bill.startPurchase(112, MONDAY, false, false);
 
         bill.addTicket(65, false);
@@ -58,7 +58,7 @@ public class InMemoryBillTest {
     }
 
     @Test
-    public void shouldReturnChildrenPrice_onFinishPurchase_withAddSingleChildrenTicket() {
+    void shouldReturnChildrenPrice_onFinishPurchase_withAddSingleChildrenTicket() {
         bill.startPurchase(112, MONDAY, false, false);
 
         bill.addTicket(12, false);
@@ -69,7 +69,7 @@ public class InMemoryBillTest {
     }
 
     @Test
-    public void shouldReturnGroupPrice_onFinishPurchase_withTwentyOrMoreTickets() {
+    void shouldReturnGroupPrice_onFinishPurchase_withTwentyOrMoreTickets() {
         bill.startPurchase(112, MONDAY, false, false);
 
         for (int i = 0; i < 20; i++) {
@@ -82,7 +82,7 @@ public class InMemoryBillTest {
     }
 
     @Test
-    public void shouldReturnGeneralAdmissionPricePlus3DMovieAddition_onFinishPurchase_withAddSingleGeneralAdmissionTicketAnd3DMovie() {
+    void shouldReturnGeneralAdmissionPricePlus3DMovieAddition_onFinishPurchase_withAddSingleGeneralAdmissionTicketAnd3DMovie() {
         bill.startPurchase(112, MONDAY, false, true);
 
         bill.addTicket(27, false);
@@ -93,7 +93,7 @@ public class InMemoryBillTest {
     }
 
     @Test
-    public void shouldReturnGeneralAdmissionPricePlusOverLengthAddition_onFinishPurchase_withAddSingleGeneralAdmissionTicketAndLongMovie() {
+    void shouldReturnGeneralAdmissionPricePlusOverLengthAddition_onFinishPurchase_withAddSingleGeneralAdmissionTicketAndLongMovie() {
         bill.startPurchase(121, MONDAY, false, false);
 
         bill.addTicket(27, false);
@@ -104,7 +104,7 @@ public class InMemoryBillTest {
     }
 
     @Test
-    public void shouldReturnGeneralAdmissionPriceMinusSpecialMovieDayDiscount_onFinishPurchase_withAddSingleGeneralAdmissionTicketAndSpecialMovieDay() {
+    void shouldReturnGeneralAdmissionPriceMinusSpecialMovieDayDiscount_onFinishPurchase_withAddSingleGeneralAdmissionTicketAndSpecialMovieDay() {
         bill.startPurchase(119, THURSDAY, false, false);
 
         bill.addTicket(27, false);
@@ -116,7 +116,7 @@ public class InMemoryBillTest {
 
     // Special movie day does NOT apply to groups!
     @Test
-    public void shouldReturnGroupPrice_onFinishPurchase_withTwentyOrMoreTicketsAndSpecialMovieDay() {
+    void shouldReturnGroupPrice_onFinishPurchase_withTwentyOrMoreTicketsAndSpecialMovieDay() {
         bill.startPurchase(112, THURSDAY, false, false);
 
         for (int i = 0; i < 20; i++) {
@@ -129,7 +129,7 @@ public class InMemoryBillTest {
     }
 
     @Test
-    public void shouldReturnGeneralAdmissionPricePlusWeekendAddition_onFinishPurchase_withAddSingleGeneralAdmissionTicketAndWeekendDay() {
+    void shouldReturnGeneralAdmissionPricePlusWeekendAddition_onFinishPurchase_withAddSingleGeneralAdmissionTicketAndWeekendDay() {
         bill.startPurchase(119, SATURDAY, false, false);
 
         bill.addTicket(27, false);
@@ -140,7 +140,7 @@ public class InMemoryBillTest {
     }
 
     @Test
-    public void shouldReturnGeneralAdmissionPricePlusBalconySeatingAddition_onFinishPurchase_withAddSingleGeneralAdmissionTicketAndBalconySeating() {
+    void shouldReturnGeneralAdmissionPricePlusBalconySeatingAddition_onFinishPurchase_withAddSingleGeneralAdmissionTicketAndBalconySeating() {
         bill.startPurchase(119, TUESDAY, true, false);
 
         bill.addTicket(27, false);
@@ -151,7 +151,7 @@ public class InMemoryBillTest {
     }
 
     @Test
-    public void shouldReturnCorrectTotalPrice_onFinishPurchase_withMixAllKindsOfAdditions() {
+    void shouldReturnCorrectTotalPrice_onFinishPurchase_withMixAllKindsOfAdditions() {
         bill.startPurchase(121, SATURDAY, true, true);
 
         bill.addTicket(27, false);
@@ -162,7 +162,7 @@ public class InMemoryBillTest {
     }
 
     @Test
-    public void shouldReturnCorrectTotalPrice_onFinishPurchase_withMixAllKindsOfTickets() {
+    void shouldReturnCorrectTotalPrice_onFinishPurchase_withMixAllKindsOfTickets() {
         bill.startPurchase(112, MONDAY, false, false);
 
         bill.addTicket(21, true);
@@ -178,7 +178,7 @@ public class InMemoryBillTest {
     }
 
     @Test
-    public void shouldReturnCorrectTotalPrice_onFinishPurchase_withMixTicketsAndAdditionsButNotGroup() {
+    void shouldReturnCorrectTotalPrice_onFinishPurchase_withMixTicketsAndAdditionsButNotGroup() {
         bill.startPurchase(125, THURSDAY, false, true);
 
         bill.addTicket(21, true);
@@ -194,7 +194,7 @@ public class InMemoryBillTest {
     }
 
     @Test
-    public void shouldReturnCorrectTotalPrice_onFinishPurchase_withTwentyOrMoreTicketsAndAllAdditions() {
+    void shouldReturnCorrectTotalPrice_onFinishPurchase_withTwentyOrMoreTicketsAndAllAdditions() {
         bill.startPurchase(130, SATURDAY, true, true);
 
         for (int i = 0; i < 20; i++) {
