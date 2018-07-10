@@ -35,13 +35,13 @@ public class InMemoryBill implements Bill {
     }
 
     private double calculateGroupPrice() {
-        final double totalGroupExtras = movie.calculateTotalGroupExtras();
+        var totalGroupExtras = movie.calculateTotalGroupExtras();
 
         return tickets.size() * (GROUP_PRICE + totalGroupExtras);
     }
 
     private double calculateNonGroupPrice() {
-        final double totalExtras = movie.calculateTotalExtras();
+        var totalExtras = movie.calculateTotalExtras();
 
         return tickets.stream()
                 .mapToDouble(ticket -> ticket.calculatePrice() + totalExtras)

@@ -9,13 +9,13 @@ public class GameRunner {
     private static boolean loser;
 
     public static void main(String[] args) {
-        final Game aGame = new Game();
+        var aGame = new Game();
 
         aGame.add("Chet");
         aGame.add("Pat");
         aGame.add("Sue");
 
-        final Random rand = new Random();
+        var rand = new Random();
 
         do {
             aGame.roll(rand.nextInt(5) + 1);
