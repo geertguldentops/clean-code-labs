@@ -4,7 +4,7 @@ public class OverLengthAddition implements Extra {
 
     private static final double OVER_LENGTH_ADDITION = 1.5;
 
-    private int runtime;
+    private final int runtime;
 
     public OverLengthAddition(int runtime) {
         this.runtime = runtime;

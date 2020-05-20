@@ -9,7 +9,7 @@ public class InMemoryBill implements Bill {
     private static final double GROUP_PRICE = 6.0;
 
     private Movie movie;
-    private List<Ticket> tickets = new ArrayList<>();
+    private final List<Ticket> tickets = new ArrayList<>();
 
     @Override
     public void startPurchase(int runtime, DayOfWeek dayOfWeek, boolean loge, boolean threeD) {
