@@ -30,9 +30,19 @@ public class MovieBill implements Bill {
 
     @Override
     public double finishPurchase() {
-        return tickets.stream()
-                .map(Ticket::getAdmission)
-                .mapToDouble(Double::doubleValue)
-                .sum();
+        double sum;
+
+        if (tickets.size() >= 20) {
+            sum = tickets.stream()
+                    .mapToDouble(Ticket::getGroupAdmission)
+                    .sum();
+        }
+        else {
+            sum = tickets.stream()
+                    .mapToDouble(Ticket::getAdmission)
+                    .sum();
+        }
+
+        return sum;
     }
 }
