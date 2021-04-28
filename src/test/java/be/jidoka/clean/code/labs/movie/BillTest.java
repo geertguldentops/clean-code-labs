@@ -73,4 +73,33 @@ class BillTest {
 //    TODO: test 19 tickets
     }
 
+    @Nested
+    class threeDMoviePurchaseTest {
+
+        @BeforeEach
+        void setUp() {
+            bill = new MovieBill();
+            bill.startPurchase(60, DayOfWeek.MONDAY, false, true);
+        }
+
+        @Test
+        void billWithoutTicketsReturnsZero() {
+            // Act
+            double purchase = bill.finishPurchase();
+
+            // Assert
+            assertThat(purchase).isZero();
+        }
+
+        @Test
+        void billWithTicketReturnsGeneralAdmission() {
+            // Act
+            bill.addTicket(32, false);
+            double purchase = bill.finishPurchase();
+
+            // Assert
+            assertThat(purchase).isEqualTo(14.0);
+        }
+    }
+
 }

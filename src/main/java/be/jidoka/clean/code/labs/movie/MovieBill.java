@@ -7,9 +7,13 @@ import java.util.List;
 public class MovieBill implements Bill {
 
     private List<Ticket> tickets;
+    private boolean threeD;
+    private double surCharge;
+
 
     @Override
     public void startPurchase(int runtime, DayOfWeek dayOfWeek, boolean loge, boolean threeD) {
+        this.threeD = threeD;
         tickets = new ArrayList<>();
     }
 
@@ -25,6 +29,10 @@ public class MovieBill implements Bill {
             } else {
                 tickets.add(new GeneralAdmissionTicket());
             }
+        }
+
+        if (this.threeD) {
+            surCharge += 3.0;
         }
     }
 
@@ -43,6 +51,6 @@ public class MovieBill implements Bill {
                     .sum();
         }
 
-        return sum;
+        return sum + surCharge;
     }
 }
