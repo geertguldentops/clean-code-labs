@@ -3,6 +3,8 @@ package be.jidoka.clean.code.labs.movie;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.time.DayOfWeek;
 
@@ -59,18 +61,21 @@ class BillTest {
             assertThat(purchase).isEqualTo(17.0);
         }
 
-        @Test
-        void billWithTwentyPeopleOrMoreReturnsGroupAdmission() {
-            for (int i = 0; i < 20; i++) {
+        @CsvSource(value = {
+                "19     |    209.0",
+                "20     |    120.0",
+                "21     |    126.0"
+        }, delimiterString = "|")
+        @ParameterizedTest
+        void billWithXPeopleOrMoreReturnsAdmission(int people, double admission) {
+            for (int i = 0; i < people; i++) {
                 bill.addTicket(35,false);
             }
 
             double purchase = bill.finishPurchase();
-            assertThat(purchase).isEqualTo(120.0);
+            assertThat(purchase).isEqualTo(admission);
         }
 
-//    TODO: test 21 tickets
-//    TODO: test 19 tickets
     }
 
     @Nested
