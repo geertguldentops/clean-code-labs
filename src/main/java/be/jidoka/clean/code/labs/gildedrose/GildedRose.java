@@ -19,18 +19,13 @@ class GildedRose {
     private interface NewItem {
 
         static NewItem of(Item item) {
-            switch (item.name) {
-                case "Backstage passes to a TAFKAL80ETC concert":
-                    return new ConcertItem(item);
-                case "Aged Brie":
-                    return new ImprovingItem(item);
-                case "Sulfuras, Hand of Ragnaros":
-                    return new LegendaryItem(item);
-                case "Conjured Mana Cake":
-                    return new ConjuredItem(item);
-                default:
-                    return new DegradingItem(item);
-            }
+            return switch (item.name) {
+                case "Backstage passes to a TAFKAL80ETC concert" -> new ConcertItem(item);
+                case "Aged Brie" -> new ImprovingItem(item);
+                case "Sulfuras, Hand of Ragnaros" -> new LegendaryItem(item);
+                case "Conjured Mana Cake" -> new ConjuredItem(item);
+                default -> new DegradingItem(item);
+            };
         }
 
         void update();
