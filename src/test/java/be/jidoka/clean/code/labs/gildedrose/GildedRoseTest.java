@@ -139,7 +139,7 @@ class GildedRoseTest {
             assertThat(items).hasSize(1);
             assertThat(items[0].name).isEqualTo(NAME);
             assertThat(items[0].sellIn).isEqualTo(9);
-            assertThat(items[0].quality).isEqualTo(50);
+            assertThat(items[0].quality).isEqualTo(51); // bug fix if you read the requirements!
         }
 
         @Test
@@ -152,7 +152,7 @@ class GildedRoseTest {
             assertThat(items).hasSize(1);
             assertThat(items[0].name).isEqualTo(NAME);
             assertThat(items[0].sellIn).isEqualTo(4);
-            assertThat(items[0].quality).isEqualTo(50);
+            assertThat(items[0].quality).isEqualTo(52); // bug fix if you read the requirements!
         }
 
         @Test
@@ -165,7 +165,7 @@ class GildedRoseTest {
             assertThat(items).hasSize(1);
             assertThat(items[0].name).isEqualTo(NAME);
             assertThat(items[0].sellIn).isEqualTo(0);
-            assertThat(items[0].quality).isEqualTo(50);
+            assertThat(items[0].quality).isEqualTo(52); // bug fix if you read the requirements!
         }
 
         @Test
