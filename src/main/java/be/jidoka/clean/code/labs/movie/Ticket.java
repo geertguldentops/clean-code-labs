@@ -1,6 +1,7 @@
 package be.jidoka.clean.code.labs.movie;
 
-// TODO: Implement equals() and hashCode() if used in Map or Set.
+import java.util.Objects;
+
 public class Ticket {
 
     private static final double GENERAL_ADMISSION_PRICE = 11.0;
@@ -26,6 +27,21 @@ public class Ticket {
                 return GENERAL_ADMISSION_PRICE;
             }
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Ticket ticket = (Ticket) o;
+
+        return Objects.equals(customer, ticket.customer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(customer);
     }
 
 }

@@ -1,5 +1,7 @@
 package be.jidoka.clean.code.labs.movie;
 
+import java.util.Objects;
+
 public class Customer {
 
     private final int age;
@@ -24,6 +26,21 @@ public class Customer {
 
     public boolean isStudent() {
         return student;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Customer customer = (Customer) o;
+
+        return age == customer.age && student == customer.student;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(age, student);
     }
 
 }
