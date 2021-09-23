@@ -1,8 +1,12 @@
 package be.jidoka.clean.code.labs.yatzy;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.IntStream;
 
+import static java.util.Comparator.reverseOrder;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.*;
 
@@ -108,9 +112,9 @@ public class Yatzy {
 
     private List<Integer> diceOfAKindFromHighestToLowest(int number) {
         return tally().entrySet().stream()
-                .sorted(Comparator.<Map.Entry<Integer, Long>>comparingInt(Map.Entry::getKey).reversed())
                 .filter(numberToCount -> numberToCount.getValue() >= number)
                 .map(Map.Entry::getKey)
+                .sorted(reverseOrder())
                 .collect(toList());
     }
 
