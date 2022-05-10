@@ -43,6 +43,15 @@ class PurchaseTest {
 	}
 
 	@Test
+	void two_default_student_tickets() {
+		bill.startPurchase(119, DayOfWeek.MONDAY, false, false);
+		bill.addTicket(20, true);
+		bill.addTicket(20, true);
+
+		assertThat(bill.finishPurchase()).isEqualTo(16.00);
+	}
+
+	@Test
 	void over_65_years_old() {
 		bill.startPurchase(119, DayOfWeek.MONDAY, false, false);
 		bill.addTicket(66, false);
@@ -50,8 +59,16 @@ class PurchaseTest {
 		assertThat(bill.finishPurchase()).isEqualTo(6.00);
 	}
 
+	@Test
+	void under_13_years_old() {
+		bill.startPurchase(119, DayOfWeek.MONDAY, false, false);
+		bill.addTicket(12, false);
+
+		assertThat(bill.finishPurchase()).isEqualTo(5.50);
+	}
+
 	// Boundaries ages
-		// under 13
+		// 13
 		// 65
 	// senior + student same time
 	// Switch case gebruiken?
