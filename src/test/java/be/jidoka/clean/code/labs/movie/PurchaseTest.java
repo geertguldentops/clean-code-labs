@@ -54,5 +54,6 @@ class PurchaseTest {
 		// under 13
 		// 65
 	// senior + student same time
+	// Switch case gebruiken?
 
 }
