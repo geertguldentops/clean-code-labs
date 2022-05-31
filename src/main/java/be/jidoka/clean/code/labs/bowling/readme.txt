@@ -1,3 +1,6 @@
+Bowling Game
+------------
+
 Write a program, to score a game of Ten-Pin Bowling.
 
 The scoring rules:
@@ -58,5 +61,28 @@ Five pins on the first ball of all ten frames.
 Second ball of each frame hits all five remaining
 pins, a spare.
 One bonus ball, hits five pins.
-Score for each frame == 10 + score for next one ball == 10 + 5 == 15
+Score for each frame == 10 + score for next one
+ball == 10 + 5 == 15
 Total score == 10 frames x 15 == 150
+
+
+Voorbeeld API:
+
+Operaties:
+	- void roll(int pin);
+	- int score();
+
+Voorbeeld gebruik:
+
+// Frame 1
+game.roll(9);
+game.roll(0);
+
+// Frame 2
+game.roll(9);
+game.roll(0);
+
+...
+
+// na 10 frames
+score => 90
