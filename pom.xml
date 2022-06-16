@@ -38,6 +38,12 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-params</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
                 <version>${mockito.version}</version>
@@ -67,6 +73,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <scope>test</scope>
@@ -92,22 +103,13 @@
                         <showWarnings>true</showWarnings>
                         <showDeprecation>true</showDeprecation>
                         <release>${java.version}</release>
-                        <!-- without forking compilation happens in the same process, so no arguments are applied -->
-                        <fork>true</fork>
-                        <compilerArgs>
-                            <compilerArg>--enable-preview</compilerArg>
-                        </compilerArgs>
                     </configuration>
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.22.2</version>
-                    <configuration>
-                        <argLine>--enable-preview</argLine>
-                    </configuration>
-                </plugin>
+                    <version>2.22.2</version></plugin>
             </plugins>
         </pluginManagement>
 

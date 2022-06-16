@@ -89,7 +89,7 @@ public class Game {
         System.out.println("They are player number " + players.size());
     }
 
-    // Roll is randomly called with a value between 1 and 5.
+    // Roll is randomly called with a price between 1 and 5.
     // Returning a String is a Seam for unit tests.
     public String roll(int roll) {
         System.out.println(players.get(currentPlayer) + " is the current player");
