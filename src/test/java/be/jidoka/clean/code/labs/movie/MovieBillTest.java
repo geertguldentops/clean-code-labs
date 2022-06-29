@@ -1,6 +1,5 @@
 package be.jidoka.clean.code.labs.movie;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -48,7 +47,6 @@ class MovieBillTest {
 		assertThat(result).isCloseTo(expectedResult, offset(0.01));
 	}
 
-	@Disabled
 	@Test
 	void finishPurchaseWithOneStudentTicket() {
 		bill.startPurchase(90, MONDAY, false, false);

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class MovieBill implements Bill {
 
-	private List<Ticket> tickets = new ArrayList<>();
+	private final List<Ticket> tickets = new ArrayList<>();
 
 	@Override
 	public void startPurchase(int runtime, DayOfWeek dayOfWeek, boolean loge, boolean threeD) {
@@ -15,20 +15,37 @@ public class MovieBill implements Bill {
 
 	@Override
 	public void addTicket(int age, boolean student) {
-		tickets.add(new Ticket());
+		tickets.add(new Ticket(student));
 	}
 
 	@Override
 	public double finishPurchase() {
 		if (tickets.size() < 20) {
-			return 11.0 * tickets.size();
+			return calculate(tickets);
 		} else {
 			return 6.0 * tickets.size();
 		}
 	}
 
+	private double calculate(List<Ticket> tickets) {
+		double purchase = 0;
+		for (Ticket ticket : tickets) {
+			if (ticket.student) {
+				purchase += 8.0;
+			} else {
+				purchase += 11.0;
+			}
+		}
+		return purchase;
+	}
+
 	private static class Ticket {
 
+		private final boolean student;
+
+		public Ticket(boolean student) {
+			this.student = student;
+		}
 	}
 
 }
