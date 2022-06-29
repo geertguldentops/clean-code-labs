@@ -83,6 +83,15 @@ class MovieBillTest {
 		assertThat(result).isCloseTo(5.5, offset(0.01));
 	}
 
+	@Test
+	void finishPurchaseWithOneDefaultTicketAnd3DPurchase() {
+		bill.startPurchase(90, MONDAY, false, true);
+		bill.addTicket(42, false);
+
+		double result = bill.finishPurchase();
+		assertThat(result).isCloseTo(14, offset(0.01));
+	}
+
 	@ParameterizedTest(name = "{0}")
 	@CsvSource({
 			"finishPurchaseWithOneDefaultTicket, 90, MONDAY, false, false, 42, false, 11",

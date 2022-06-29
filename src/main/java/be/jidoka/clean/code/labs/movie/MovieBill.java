@@ -6,11 +6,12 @@ import java.util.List;
 
 public class MovieBill implements Bill {
 
+	private boolean threeD;
 	private final List<Ticket> tickets = new ArrayList<>();
 
 	@Override
 	public void startPurchase(int runtime, DayOfWeek dayOfWeek, boolean loge, boolean threeD) {
-
+		this.threeD = threeD;
 	}
 
 	@Override
@@ -40,6 +41,11 @@ public class MovieBill implements Bill {
 				purchase += 11.0;
 			}
 		}
+
+		if (threeD) {
+			purchase += tickets.size() * 3.0;
+		}
+
 		return purchase;
 	}
 
