@@ -15,7 +15,7 @@ public class MovieBill implements Bill {
 
 	@Override
 	public void addTicket(int age, boolean student) {
-		tickets.add(new Ticket(student));
+		tickets.add(new Ticket(age, student));
 	}
 
 	@Override
@@ -30,8 +30,11 @@ public class MovieBill implements Bill {
 	private double calculate(List<Ticket> tickets) {
 		double purchase = 0;
 		for (Ticket ticket : tickets) {
-			if (ticket.student) {
+			if (ticket.age >= 65) {
+				purchase += 6.0;
+			} else if (ticket.student) {
 				purchase += 8.0;
+
 			} else {
 				purchase += 11.0;
 			}
@@ -41,9 +44,11 @@ public class MovieBill implements Bill {
 
 	private static class Ticket {
 
+		private final int age;
 		private final boolean student;
 
-		public Ticket(boolean student) {
+		public Ticket(int age, boolean student) {
+			this.age = age;
 			this.student = student;
 		}
 	}

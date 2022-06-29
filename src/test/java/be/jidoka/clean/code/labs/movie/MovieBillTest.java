@@ -56,6 +56,24 @@ class MovieBillTest {
 		assertThat(result).isCloseTo(8, offset(0.01));
 	}
 
+	@Test
+	void finishPurchaseWithOneSeniorTicket() {
+		bill.startPurchase(90, MONDAY, false, false);
+		bill.addTicket(65, false);
+
+		double result = bill.finishPurchase();
+		assertThat(result).isCloseTo(6, offset(0.01));
+	}
+
+	@Test
+	void finishPurchaseWithOneSeniorAndStudentTicket() {
+		bill.startPurchase(90, MONDAY, false, false);
+		bill.addTicket(65, true);
+
+		double result = bill.finishPurchase();
+		assertThat(result).isCloseTo(6, offset(0.01));
+	}
+
 	@ParameterizedTest(name = "{0}")
 	@CsvSource({
 			"finishPurchaseWithOneDefaultTicket, 90, MONDAY, false, false, 42, false, 11",
