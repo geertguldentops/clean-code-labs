@@ -4,7 +4,6 @@ import java.time.DayOfWeek;
 
 public class MovieBill implements Bill {
 
-	private double purchase = 0;
 	private int count = 0;
 
 	@Override
@@ -20,11 +19,9 @@ public class MovieBill implements Bill {
 	@Override
 	public double finishPurchase() {
 		if (count < 20) {
-			purchase = 11.0 * count;
+			return 11.0 * count;
 		} else {
-			purchase = 6.0 * count;
+			return 6.0 * count;
 		}
-
-		return purchase;
 	}
 }
