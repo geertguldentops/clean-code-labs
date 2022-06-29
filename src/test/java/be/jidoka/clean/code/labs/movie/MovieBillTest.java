@@ -31,36 +31,20 @@ class MovieBillTest {
 		assertThat(result).isCloseTo(11, offset(0.01));
 	}
 
-	@Test
-	void finishPurchaseWithTwoDefaultTickets() {
+	@ParameterizedTest(name = "{0}")
+	@CsvSource({
+			"finishPurchaseWith2DefaultTickets, 2, 22.0",
+			"finishPurchaseWith19DefaultTickets, 19, 209.0",
+			"finishPurchaseWithGroupDefaultTickets, 20, 120.0",
+	})
+	void finishPurchaseWithMultipleButNotGroupDefaultTickets(String name, int numberOfTickets, double expectedResult) {
 		bill.startPurchase(90, MONDAY, false, false);
-		bill.addTicket(42, false);
-		bill.addTicket(42, false);
-
-		double result = bill.finishPurchase();
-		assertThat(result).isCloseTo(22, offset(0.01));
-	}
-
-	@Test
-	void finishPurchaseWith19DefaultTickets() {
-		bill.startPurchase(90, MONDAY, false, false);
-		for (int i = 0; i < 19; i++) {
+		for (int i = 0; i < numberOfTickets; i++) {
 			bill.addTicket(42, false);
 		}
 
 		double result = bill.finishPurchase();
-		assertThat(result).isCloseTo(209, offset(0.01));
-	}
-
-	@Test
-	void finishPurchaseWith20DefaultTickets() {
-		bill.startPurchase(90, MONDAY, false, false);
-		for (int i = 0; i < 20; i++) {
-			bill.addTicket(42, false);
-		}
-
-		double result = bill.finishPurchase();
-		assertThat(result).isCloseTo(120, offset(0.01));
+		assertThat(result).isCloseTo(expectedResult, offset(0.01));
 	}
 
 	@ParameterizedTest(name = "{0}")
