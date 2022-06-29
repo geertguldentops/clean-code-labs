@@ -30,11 +30,12 @@ public class MovieBill implements Bill {
 	private double calculate(List<Ticket> tickets) {
 		double purchase = 0;
 		for (Ticket ticket : tickets) {
-			if (ticket.age >= 65) {
+			if (ticket.age < 13) {
+				purchase += 5.5;
+			} else if (ticket.age >= 65) {
 				purchase += 6.0;
 			} else if (ticket.student) {
 				purchase += 8.0;
-
 			} else {
 				purchase += 11.0;
 			}
