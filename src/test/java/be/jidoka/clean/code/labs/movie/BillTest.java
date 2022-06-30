@@ -4,6 +4,7 @@ import be.jidoka.clean.code.labs.movie.purchase.Purchase;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -97,24 +98,30 @@ class BillTest {
 	@Nested
 	class Group {
 
-		@ValueSource(ints = { 2, 19 })
+		@CsvSource(value = {
+				"2  | 22.00",
+				"19 | 209.00"
+		}, delimiter = '|')
 		@ParameterizedTest
-		void purchase_multiple_tickets_but_not_group(int numberOfPeople) {
+		void purchase_multiple_tickets_but_not_group(int numberOfPeople, double expectedResult) {
 			bill.startPurchase(100, MONDAY, false, false);
 
 			rangeClosed(1, numberOfPeople).forEach(value -> bill.addTicket(33, false));
 
-			assertThat(bill.finishPurchase()).isCloseTo(numberOfPeople * 11.00, offset(0.001));
+			assertThat(bill.finishPurchase()).isCloseTo(expectedResult, offset(0.001));
 		}
 
-		@ValueSource(ints = { 20, 21 })
+		@CsvSource(value = {
+				"20 | 120.00",
+				"21 | 126.00"
+		}, delimiter = '|')
 		@ParameterizedTest
-		void purchase_multiple_tickets_as_a_group(int numberOfPeople) {
+		void purchase_multiple_tickets_as_a_group(int numberOfPeople, double expectedResult) {
 			bill.startPurchase(100, MONDAY, false, false);
 
 			rangeClosed(1, numberOfPeople).forEach(value -> bill.addTicket(33, false));
 
-			assertThat(bill.finishPurchase()).isCloseTo(numberOfPeople * 6.00, offset(0.001));
+			assertThat(bill.finishPurchase()).isCloseTo(expectedResult, offset(0.001));
 		}
 
 	}
