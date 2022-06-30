@@ -15,7 +15,7 @@ public abstract class Ticket {
 			if (student) {
 				return new StudentTicket();
 			} else {
-				return new AdultTicket();
+				return new GeneralAdmissionTicket();
 			}
 		}
 	}

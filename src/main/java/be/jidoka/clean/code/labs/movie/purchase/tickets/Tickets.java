@@ -4,9 +4,9 @@ import be.jidoka.clean.code.labs.movie.purchase.extra.Extra;
 import be.jidoka.clean.code.labs.movie.purchase.ticket.Ticket;
 
 import java.util.Set;
-import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toUnmodifiableSet;
+import static java.util.stream.IntStream.rangeClosed;
 
 public class Tickets {
 
@@ -18,7 +18,7 @@ public class Tickets {
 
 	public Tickets(Set<Ticket> tickets) {
 		if (tickets.size() >= 20) {
-			this.tickets = IntStream.rangeClosed(1, tickets.size())
+			this.tickets = rangeClosed(1, tickets.size())
 					.mapToObj(i -> Ticket.groupTicket())
 					.collect(toUnmodifiableSet());
 		} else {

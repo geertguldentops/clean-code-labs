@@ -1,6 +1,6 @@
 package be.jidoka.clean.code.labs.movie.purchase.ticket;
 
-public class AdultTicket extends Ticket {
+public class GeneralAdmissionTicket extends Ticket {
 
 	@Override
 	public double basePrice() {
