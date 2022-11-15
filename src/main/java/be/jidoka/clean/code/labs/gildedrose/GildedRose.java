@@ -1,7 +1,8 @@
 package be.jidoka.clean.code.labs.gildedrose;
 
 import java.util.Arrays;
-import java.util.stream.IntStream;
+
+import static java.util.stream.IntStream.rangeClosed;
 
 class GildedRose {
     Item[] items; // TODO: Don't change because of goblin
@@ -117,16 +118,17 @@ class GildedRose {
 
             @Override
             protected int qualityDegradationRate() {
-                if (IntStream.rangeClosed(6, 10).anyMatch(i -> i == item.sellIn)) {
+				if (item.sellIn > 10) {
+					return 1;
+				} else if (rangeClosed(6, 10).anyMatch(i -> i == item.sellIn)) {
                     return 2;
-                } else if (IntStream.rangeClosed(0, 5).anyMatch(i -> i == item.sellIn)) {
+                } else if (rangeClosed(0, 5).anyMatch(i -> i == item.sellIn)) {
                     return 3;
-                } else if (item.sellIn < 0) {
-                    return -item.quality;
                 } else {
-                    return 1;
+					// When item.sellIn is negative
+                    return -item.quality;
                 }
-            }
+			}
         }
 
         class ConjuredItem extends AbstractItem implements NewItem {
