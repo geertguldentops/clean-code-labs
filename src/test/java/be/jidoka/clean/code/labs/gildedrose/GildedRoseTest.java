@@ -2,6 +2,8 @@ package be.jidoka.clean.code.labs.gildedrose;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -73,7 +75,7 @@ class GildedRoseTest {
     }
 
     @Test
-    void updateQualityNeverHigherThan50() {
+    void updateQualityOfImprovingItemNeverResultsInQualityHigherThan50() {
         Item[] items = new Item[]{new Item("Aged Brie", 2, 50)};
 
         GildedRose app = new GildedRose(items);
@@ -82,6 +84,19 @@ class GildedRoseTest {
         assertThat(items).hasSize(1);
         assertThat(items[0].name).isEqualTo("Aged Brie");
         assertThat(items[0].sellIn).isEqualTo(1);
+        assertThat(items[0].quality).isEqualTo(50);
+    }
+
+    @Test
+    void updateQualityOfImprovingItemNeverResultsInQualityHigherThan50WhenQualityIncreasesFasterThanOne() {
+        Item[] items = new Item[]{new Item("Aged Brie", -1, 49)};
+
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+
+        assertThat(items).hasSize(1);
+        assertThat(items[0].name).isEqualTo("Aged Brie");
+        assertThat(items[0].sellIn).isEqualTo(-2);
         assertThat(items[0].quality).isEqualTo(50);
     }
 
@@ -114,76 +129,89 @@ class GildedRoseTest {
     @Nested
     class Concert {
 
-        public static final String NAME = "Backstage passes to a TAFKAL80ETC concert";
-
         @Test
         void updateQualityOfConcertSellInAbove10() {
-            Item[] items = new Item[]{new Item(NAME, 15, 20)};
+            Item[] items = new Item[]{new Item("Backstage passes to a TAFKAL80ETC concert", 15, 0)};
 
             GildedRose app = new GildedRose(items);
             app.updateQuality();
 
             assertThat(items).hasSize(1);
-            assertThat(items[0].name).isEqualTo(NAME);
+            assertThat(items[0].name).isEqualTo("Backstage passes to a TAFKAL80ETC concert");
             assertThat(items[0].sellIn).isEqualTo(14);
-            assertThat(items[0].quality).isEqualTo(21);
+            assertThat(items[0].quality).isEqualTo(1);
         }
 
         @Test
         void updateQualityOfConcertSellInBetween5And10Old() {
-            Item[] items = new Item[]{new Item(NAME, 10, 49)};
+            Item[] items = new Item[]{new Item("Backstage passes to a TAFKAL80ETC concert", 10, 0)};
 
             GildedRose app = new GildedRose(items);
             app.updateQuality();
 
             assertThat(items).hasSize(1);
-            assertThat(items[0].name).isEqualTo(NAME);
+            assertThat(items[0].name).isEqualTo("Backstage passes to a TAFKAL80ETC concert");
             assertThat(items[0].sellIn).isEqualTo(9);
-            assertThat(items[0].quality).isEqualTo(51); // bug fix if you read the requirements!
+            assertThat(items[0].quality).isEqualTo(2);
         }
 
         @Test
         void updateQualityOfConcertSellInBelow5Old() {
-            Item[] items = new Item[]{new Item(NAME, 5, 49)};
+            Item[] items = new Item[]{new Item("Backstage passes to a TAFKAL80ETC concert", 5, 0)};
 
             GildedRose app = new GildedRose(items);
             app.updateQuality();
 
             assertThat(items).hasSize(1);
-            assertThat(items[0].name).isEqualTo(NAME);
+            assertThat(items[0].name).isEqualTo("Backstage passes to a TAFKAL80ETC concert");
             assertThat(items[0].sellIn).isEqualTo(4);
-            assertThat(items[0].quality).isEqualTo(52); // bug fix if you read the requirements!
+            assertThat(items[0].quality).isEqualTo(3);
         }
 
         @Test
         void updateQualityOfConcertOnConcertDate() {
-            Item[] items = new Item[]{new Item(NAME, 1, 49)};
+            Item[] items = new Item[]{new Item("Backstage passes to a TAFKAL80ETC concert", 1, 0)};
 
             GildedRose app = new GildedRose(items);
             app.updateQuality();
 
             assertThat(items).hasSize(1);
-            assertThat(items[0].name).isEqualTo(NAME);
+            assertThat(items[0].name).isEqualTo("Backstage passes to a TAFKAL80ETC concert");
             assertThat(items[0].sellIn).isEqualTo(0);
-            assertThat(items[0].quality).isEqualTo(52); // bug fix if you read the requirements!
+            assertThat(items[0].quality).isEqualTo(3);
         }
 
         @Test
         void updateQualityOfConcertSellInZero() {
-            Item[] items = new Item[]{new Item(NAME, 0, 49)};
+            Item[] items = new Item[]{new Item("Backstage passes to a TAFKAL80ETC concert", 0, 13)};
 
             GildedRose app = new GildedRose(items);
             app.updateQuality();
 
             assertThat(items).hasSize(1);
-            assertThat(items[0].name).isEqualTo(NAME);
+            assertThat(items[0].name).isEqualTo("Backstage passes to a TAFKAL80ETC concert");
             assertThat(items[0].sellIn).isEqualTo(-1);
             assertThat(items[0].quality).isEqualTo(0);
         }
 
+        @ParameterizedTest
+        @ValueSource(ints = {11, 10, 8, 6, 5, 3, 1})
+        void updateQualityOfConcertItemNeverResultsInQualityHigherThan50(int sellInDate) {
+            Item[] items = new Item[]{new Item("Backstage passes to a TAFKAL80ETC concert", sellInDate, 49)};
+
+            GildedRose app = new GildedRose(items);
+            app.updateQuality();
+
+            assertThat(items).hasSize(1);
+            assertThat(items[0].name).isEqualTo("Backstage passes to a TAFKAL80ETC concert");
+            assertThat(items[0].sellIn).isEqualTo(sellInDate - 1);
+            assertThat(items[0].quality).isEqualTo(50);
+        }
+
     }
 
-    @Test // TODO: New requirement, make this test pass!
+    // TODO: New requirement, make this test pass!
+    @Test
     void updateQualityOfConjuredItem() {
         Item[] items = new Item[]{new Item("Conjured Mana Cake", 3, 6)};
 
@@ -196,7 +224,8 @@ class GildedRoseTest {
         assertThat(items[0].quality).isEqualTo(4);
     }
 
-    @Test // TODO: New requirement, make this test pass!
+    // TODO: New requirement, make this test pass!
+    @Test
     void updateQualityOfConjuredItemAfterSellDate() {
         Item[] items = new Item[]{new Item("Conjured Mana Cake", -1, 6)};
 

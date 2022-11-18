@@ -42,7 +42,15 @@ class GildedRose {
             @Override
             public final void update() {
                 this.item.sellIn = this.item.sellIn + sellInDegradationRate();
-                this.item.quality = Math.max(this.item.quality + qualityDegradationRate(), 0);
+                this.item.quality = Math.min(Math.max(this.item.quality + qualityDegradationRate(), minimumQuality()), maximumQuality());
+            }
+
+            private int minimumQuality() {
+                return 0;
+            }
+
+            protected int maximumQuality() {
+                return 50;
             }
 
             protected int sellInDegradationRate() {
@@ -78,14 +86,10 @@ class GildedRose {
 
             @Override
             protected int qualityDegradationRate() {
-                if (item.quality < 50) {
-                    if (item.sellIn >= 0) {
-                        return 1;
-                    } else {
-                        return 2;
-                    }
+                if (item.sellIn >= 0) {
+                    return 1;
                 } else {
-                    return 0;
+                    return 2;
                 }
             }
         }
@@ -94,6 +98,12 @@ class GildedRose {
 
             protected LegendaryItem(Item item) {
                 super(item);
+            }
+
+            @Override
+            protected int maximumQuality() {
+                // legendary items do not change so their maximum quality is their current (immutable) quality.
+                return item.quality;
             }
 
             @Override
@@ -118,17 +128,17 @@ class GildedRose {
 
             @Override
             protected int qualityDegradationRate() {
-				if (item.sellIn > 10) {
-					return 1;
-				} else if (rangeClosed(6, 10).anyMatch(i -> i == item.sellIn)) {
+                if (item.sellIn > 10) {
+                    return 1;
+                } else if (rangeClosed(6, 10).anyMatch(i -> i == item.sellIn)) {
                     return 2;
                 } else if (rangeClosed(0, 5).anyMatch(i -> i == item.sellIn)) {
                     return 3;
                 } else {
-					// When item.sellIn is negative
+                    // When item.sellIn is negative
                     return -item.quality;
                 }
-			}
+            }
         }
 
         class ConjuredItem extends AbstractItem implements NewItem {
