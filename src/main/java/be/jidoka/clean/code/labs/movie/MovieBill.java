@@ -6,6 +6,9 @@ import java.util.List;
 
 public class MovieBill implements Bill {
 
+    private static final double GROUP_PRICE = 6.00;
+    private static final int MINIMAL_GROUP_SIZE = 20;
+
     private List<Ticket> tickets = new ArrayList<>();
 
     @Override
@@ -21,6 +24,10 @@ public class MovieBill implements Bill {
 
     @Override
     public double finishPurchase() {
+        if (tickets.size() >= MINIMAL_GROUP_SIZE) {
+            return tickets.size() * GROUP_PRICE;
+        }
+
         return tickets.stream()
                 .map(Ticket::getPrice)
                 .mapToDouble(Double::doubleValue)

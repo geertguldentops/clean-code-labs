@@ -2,6 +2,7 @@ package be.jidoka.clean.code.labs.movie;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.DayOfWeek;
@@ -58,6 +59,23 @@ class BillTest {
 
         assertThat(bill.finishPurchase()).isEqualTo(6.00);
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "20, 120.00",
+            "21, 126.00",
+    })
+    void groupTickets(int numberOfTickets, double expectedPrice) {
+        Bill bill = setUpDefaultMovieBill();
+
+        for (int i = 0; i < numberOfTickets; i++) {
+            bill.addTicket(30, false);
+        }
+
+        assertThat(bill.finishPurchase()).isEqualTo(expectedPrice);
+    }
+
+    // TODO: Boundaries: 19 and 21 tickets
 
     @Test
     void oneStudentAndSeniorCitizenTicket() {
