@@ -82,12 +82,30 @@ class BillTest {
         assertThat(bill.finishPurchase()).isEqualTo(8.00);
     }
 
+    @Test
+    void _3DMovie() {
+        Bill bill = setUp3DMovie();
+
+        bill.addTicket(30, false);
+
+        assertThat(bill.finishPurchase()).isEqualTo(14.00);
+    }
+
     private static Bill setUpDefaultMovieBill() {
         Bill bill = new MovieBill();
         bill.startPurchase(100, DayOfWeek.MONDAY, false, false);
 
         return bill;
     }
+
+    private static Bill setUp3DMovie() {
+        Bill bill = new MovieBill();
+        bill.startPurchase(100, DayOfWeek.MONDAY, false, true);
+        return bill;
+    }
+
+    // TODO: 3D and group
+    // TODO: 3D and other kinds of tickets?
 
     // TODO: Multiple admissions together in 1 purchase
     // TODO: can_not_finish_purchase_without_adding_ticket
