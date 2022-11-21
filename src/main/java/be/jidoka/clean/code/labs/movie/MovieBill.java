@@ -1,10 +1,12 @@
 package be.jidoka.clean.code.labs.movie;
 
 import java.time.DayOfWeek;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MovieBill implements Bill {
 
-    private double totalPrice;
+    private List<Ticket> tickets = new ArrayList<>();
 
     @Override
     public void startPurchase(int runtime, DayOfWeek dayOfWeek, boolean loge, boolean threeD) {
@@ -13,19 +15,32 @@ public class MovieBill implements Bill {
 
     @Override
     public void addTicket(int age, boolean student) {
-        if (age >= 65) {
-            totalPrice += 6.00;
-        } else {
-            if (student) {
-                totalPrice += 8.00;
-            } else {
-                totalPrice += 11.00;
-            }
-        }
+        Ticket ticket = new Ticket(age, student);
+        tickets.add(ticket);
     }
 
     @Override
     public double finishPurchase() {
-        return totalPrice;
+        return tickets.stream()
+                .map(Ticket::getPrice)
+                .mapToDouble(Double::doubleValue)
+                .sum();
     }
+
+    private record Ticket(int age, boolean student) {
+
+        public double getPrice() {
+            if (age >= 65) {
+                return 6.00;
+            } else {
+                if (student) {
+                    return 8.00;
+                } else {
+                    return 11.00;
+                }
+            }
+        }
+
+    }
+
 }
