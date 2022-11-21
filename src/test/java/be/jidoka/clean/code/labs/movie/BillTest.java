@@ -2,7 +2,6 @@ package be.jidoka.clean.code.labs.movie;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.DayOfWeek;
@@ -31,14 +30,16 @@ class BillTest {
         assertThat(bill.finishPurchase()).isEqualTo(11.00);
     }
 
-    @Test
-    void multipleGeneralAdmissionTickets() {
+    @ParameterizedTest
+    @ValueSource(ints = {2, 19})
+    void multipleGeneralAdmissionTickets(int numberOfTickets) {
         Bill bill = setUpDefaultMovieBill();
 
-        bill.addTicket(30, false);
-        bill.addTicket(30, false);
+        for (int i = 0; i < numberOfTickets; i++) {
+            bill.addTicket(30, false);
+        }
 
-        assertThat(bill.finishPurchase()).isEqualTo(22.00);
+        assertThat(bill.finishPurchase()).isEqualTo(numberOfTickets * 11.00);
     }
 
     @Test
@@ -61,21 +62,16 @@ class BillTest {
     }
 
     @ParameterizedTest
-    @CsvSource({
-            "20, 120.00",
-            "21, 126.00",
-    })
-    void groupTickets(int numberOfTickets, double expectedPrice) {
+    @ValueSource(ints = {20, 21})
+    void groupTickets(int numberOfTickets) {
         Bill bill = setUpDefaultMovieBill();
 
         for (int i = 0; i < numberOfTickets; i++) {
             bill.addTicket(30, false);
         }
 
-        assertThat(bill.finishPurchase()).isEqualTo(expectedPrice);
+        assertThat(bill.finishPurchase()).isEqualTo(numberOfTickets * 6.00);
     }
-
-    // TODO: Boundaries: 19 and 21 tickets
 
     @Test
     void oneStudentAndSeniorCitizenTicket() {
