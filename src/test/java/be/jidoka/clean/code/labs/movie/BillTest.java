@@ -1,6 +1,8 @@
 package be.jidoka.clean.code.labs.movie;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.DayOfWeek;
 
@@ -18,11 +20,12 @@ class BillTest {
 //                .isInstanceOf(IllegalStateException.class);
 //    }
 
-    @Test
-    void oneGeneralAdmissionTicket() {
+    @ParameterizedTest
+    @ValueSource(ints = {18, 30, 64})
+    void oneGeneralAdmissionTicket(int age) {
         Bill bill = setUpDefaultMovieBill();
 
-        bill.addTicket(30, false);
+        bill.addTicket(age, false);
 
         assertThat(bill.finishPurchase()).isEqualTo(11.00);
     }
@@ -46,17 +49,24 @@ class BillTest {
         assertThat(bill.finishPurchase()).isEqualTo(8.00);
     }
 
-    @Test
-    void oneSeniorCitizenAdmissionTicket() {
+    @ParameterizedTest
+    @ValueSource(ints = {65, 66, Integer.MAX_VALUE})
+    void oneSeniorCitizenAdmissionTicket(int age) {
         Bill bill = setUpDefaultMovieBill();
 
-        bill.addTicket(65, false);
+        bill.addTicket(age, false);
 
         assertThat(bill.finishPurchase()).isEqualTo(6.00);
     }
 
-    // TODO: age 64 and age 66
-    // TODO: senior + student?
+    @Test
+    void oneStudentAndSeniorCitizenTicket() {
+        Bill bill = setUpDefaultMovieBill();
+
+        bill.addTicket(65, true);
+
+        assertThat(bill.finishPurchase()).isEqualTo(8.00);
+    }
 
     private static Bill setUpDefaultMovieBill() {
         Bill bill = new MovieBill();

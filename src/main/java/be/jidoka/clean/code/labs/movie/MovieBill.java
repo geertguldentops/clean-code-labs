@@ -30,11 +30,11 @@ public class MovieBill implements Bill {
     private record Ticket(int age, boolean student) {
 
         public double getPrice() {
-            if (age >= 65) {
-                return 6.00;
+            if (student) {
+                return 8.00;
             } else {
-                if (student) {
-                    return 8.00;
+                if (age >= 65) {
+                    return 6.00;
                 } else {
                     return 11.00;
                 }
