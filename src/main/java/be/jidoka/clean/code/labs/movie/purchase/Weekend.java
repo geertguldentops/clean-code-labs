@@ -11,20 +11,20 @@ import static java.time.DayOfWeek.SUNDAY;
 
 public class Weekend implements Extra {
 
-	private final DayOfWeek dayOfWeek;
+    private final DayOfWeek dayOfWeek;
 
-	public Weekend(DayOfWeek dayOfWeek) {
-		this.dayOfWeek = dayOfWeek;
-	}
+    public Weekend(DayOfWeek dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
 
-	@Override
-	public boolean appliesTo(Ticket ticket) {
-		return true;
-	}
+    @Override
+    public boolean appliesTo(Ticket ticket) {
+        return true;
+    }
 
-	@Override
-	public double price() {
-		return EnumSet.of(SATURDAY, SUNDAY).contains(dayOfWeek) ? 1.50 : 0.00;
-	}
+    @Override
+    public double price() {
+        return EnumSet.of(SATURDAY, SUNDAY).contains(dayOfWeek) ? 1.50 : 0.00;
+    }
 
 }

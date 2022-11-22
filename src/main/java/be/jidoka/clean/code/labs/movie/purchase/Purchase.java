@@ -14,26 +14,26 @@ import java.util.Set;
 
 public class Purchase implements Bill {
 
-	private Set<Extra> extras = new HashSet<>();
-	private Set<Ticket> tickets = new HashSet<>();
+    private Set<Extra> extras = new HashSet<>();
+    private Set<Ticket> tickets = new HashSet<>();
 
-	@Override
-	public void startPurchase(int runtime, DayOfWeek dayOfWeek, boolean loge, boolean threeD) {
-		extras.add(new OverLength(runtime));
-		extras.add(new SpecialMovieDay(dayOfWeek));
-		extras.add(new ThreeDMovie(threeD));
-		extras.add(new Weekend(dayOfWeek));
-		extras.add(new Balcony(loge));
-	}
+    @Override
+    public void startPurchase(int runtime, DayOfWeek dayOfWeek, boolean loge, boolean threeD) {
+        extras.add(new OverLength(runtime));
+        extras.add(new SpecialMovieDay(dayOfWeek));
+        extras.add(new ThreeDMovie(threeD));
+        extras.add(new Weekend(dayOfWeek));
+        extras.add(new Balcony(loge));
+    }
 
-	@Override
-	public void addTicket(int age, boolean student) {
-		tickets.add(Ticket.create(age, student));
-	}
+    @Override
+    public void addTicket(int age, boolean student) {
+        tickets.add(Ticket.create(age, student));
+    }
 
-	@Override
-	public double finishPurchase() {
-		return Tickets.create(tickets).calculatePrice(extras);
-	}
+    @Override
+    public double finishPurchase() {
+        return Tickets.create(tickets).calculatePrice(extras);
+    }
 
 }

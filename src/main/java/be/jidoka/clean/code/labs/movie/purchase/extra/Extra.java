@@ -4,8 +4,8 @@ import be.jidoka.clean.code.labs.movie.purchase.ticket.Ticket;
 
 public interface Extra {
 
-	boolean appliesTo(Ticket ticket);
+    boolean appliesTo(Ticket ticket);
 
-	double price();
+    double price();
 
 }
