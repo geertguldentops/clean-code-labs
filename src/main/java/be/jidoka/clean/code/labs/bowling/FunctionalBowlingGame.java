@@ -1,8 +1,6 @@
 package be.jidoka.clean.code.labs.bowling;
 
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 class FunctionalBowlingGame {
@@ -14,44 +12,40 @@ class FunctionalBowlingGame {
     }
 
     public static int calculateScore(List<Integer> rolls) {
-        return frames(rolls).stream()
+        return partitionIntoFrames(rolls).stream()
                 .limit(MAX_NUMBER_OF_FRAMES_IN_SINGLE_GAME)
-                .flatMap(Collection::stream)
+                .map(Frame::calculateScore)
                 .mapToInt(Integer::intValue)
                 .sum();
     }
 
-    public static List<List<Integer>> frames(List<Integer> rolls) {
+    public static List<Frame> partitionIntoFrames(List<Integer> rolls) {
         if (rolls.isEmpty()) {
             return new ArrayList<>();
         } else {
-            var partitions = new ArrayList<List<Integer>>();
+            var framePartitions = new ArrayList<Frame>();
 
             if (isStrike(rolls)) {
-                partitions.add(take(rolls, 3));
-                partitions.addAll(frames(drop(rolls, 1)));
+                framePartitions.add(take(rolls, 3));
+                framePartitions.addAll(partitionIntoFrames(drop(rolls, 1)));
             } else if (isSpare(rolls)) {
-                partitions.add(take(rolls, 3));
-                partitions.addAll(frames(drop(rolls, 2)));
+                framePartitions.add(take(rolls, 3));
+                framePartitions.addAll(partitionIntoFrames(drop(rolls, 2)));
             } else {
-                partitions.add(take(rolls, 2));
-                partitions.addAll(frames(drop(rolls, 2)));
+                framePartitions.add(take(rolls, 2));
+                framePartitions.addAll(partitionIntoFrames(drop(rolls, 2)));
             }
 
-            return partitions;
+            return framePartitions;
         }
     }
 
-    private static List<Integer> take(List<Integer> rolls, int n) {
-        var subset = new ArrayList<Integer>();
+    private static Frame take(List<Integer> rolls, int n) {
+        var frameRolls = rolls.stream()
+                .limit(n)
+                .toList();
 
-        for (int i = 0; i < n; i++) {
-            if (i < rolls.size()) {
-                subset.add(rolls.get(i));
-            }
-        }
-
-        return subset;
+        return new Frame(frameRolls);
     }
 
     private static List<Integer> drop(List<Integer> rolls, int n) {
@@ -64,6 +58,16 @@ class FunctionalBowlingGame {
 
     private static boolean isSpare(List<Integer> rolls) {
         return rolls.get(0) + rolls.get(1) == 10;
+    }
+
+    public record Frame(List<Integer> rolls) {
+
+        public int calculateScore() {
+            return rolls.stream()
+                    .mapToInt(Integer::intValue)
+                    .sum();
+        }
+
     }
 
 }
