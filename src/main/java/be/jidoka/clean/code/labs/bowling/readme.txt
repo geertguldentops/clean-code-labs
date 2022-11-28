@@ -66,13 +66,13 @@ ball == 10 + 5 == 15
 Total score == 10 frames x 15 == 150
 
 
-Voorbeeld API:
+Example API:
 
-Operaties:
+Operations:
 	- void roll(int pin);
 	- int score();
 
-Voorbeeld gebruik:
+Example usage:
 
 // Frame 1
 game.roll(9);
@@ -84,5 +84,5 @@ game.roll(0);
 
 ...
 
-// na 10 frames
+// After 10 frames
 score => 90
